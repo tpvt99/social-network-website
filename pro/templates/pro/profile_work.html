@@ -1,0 +1,82 @@
+<div class="info-works">
+    <div class="work-head">
+        <p class="work-headp">Công việc</p>
+    </div>
+    <div class="work-main">
+        {% load pro_extras %}
+        {% with a=owner_user.user_infowork_user.all %}
+        {% with pri=request.user|render_friend_button:owner_user %}
+        {% if a %}
+            {% for i in a %}
+                {% if i.privacy == 'private' %}
+                    {% if request.user == owner_user %}
+                        <div class="work-content">
+                            <p>
+                            <span class="fa fa-briefcase"></span>
+                            <span>Làm việc tại</span>
+                            <span class="a-sp">{{i.company}}</span>
+                            {% if i.position %}
+                            <p class="work-position">
+                            <span>Vị trí</span><span class="a-sp">{{i.position}}</span></p>
+                            {% endif %}
+                            {% if i.time_end and i.time_begin %}
+                                <p class="work-position">
+                                <span>Từ</span> <span class="a-sp">{{i.time_begin|date:'Y'}}</span>
+                                <span>đến</span> <span class="a-sp">{{i.time_end|date:'Y'}}</span>
+                                </p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% elif i.privacy == 'friend' %}
+                    {% if pri == 'friend' or pri == 'self' %}
+                        <div class="work-content">
+                            <p>
+                            <span class="fa fa-briefcase"></span>
+                            <span>Làm việc tại</span>
+                            <span class="a-sp">{{i.company}}</span>
+                            </p>
+                            {% if i.position %}
+                            <p class="work-position">
+                            <span>Vị trí</span><span class="a-sp">{{i.position}}</span></p>
+                            {% endif %}
+                            {% if i.time_end and i.time_begin %}
+                            <p class="work-position">
+                            <span>Từ</span> <span class="a-sp">{{i.time_begin|date:'Y'}}</span>
+                            <span>đến</span> <span class="a-sp">{{i.time_end|date:'Y'}}</span>
+                            </p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% elif i.privacy == 'public' %}
+                        <div class="work-content">
+                            <p>
+                            <span class="fa fa-briefcase"></span>
+                            <span>Làm việc tại</span>
+                            <span class="a-sp">{{i.company}}</span>
+                            </p>
+                            {% if i.position %}
+                            <p class="work-position">
+                            <span>Vị trí</span><span class="a-sp">{{i.position}}</span></p>
+                            {% endif %}
+                            {% if i.time_end and i.time_begin %}
+                            <p class="work-position">
+                            <span>Từ</span> <span class="a-sp">{{i.time_begin|date:'Y'}}</span>
+                            <span>đến</span> <span class="a-sp">{{i.time_end|date:'Y'}}</span>
+                            </p>
+                            {% endif %}
+                        </div>
+                {% endif %}
+                    {% if request.user == owner_user %}
+                    <p class="edit-work" data-work="{{i.id}}">Chỉnh sửa</p>
+                    {% endif %}
+            {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% endwith %}
+        {% if request.user == owner_user %}
+            <p class="add-work">Thêm thông tin về công việc</p>
+        {% endif %}
+    </div>
+</div>
+<link rel="stylesheet" type="text/css" href="/static/pro/profile_work.css">
+<script type="text/javascript" src="/static/pro/profile_work.js"></script>

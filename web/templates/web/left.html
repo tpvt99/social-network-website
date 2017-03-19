@@ -1,0 +1,93 @@
+<div id="left_web" class="sticky-div">
+    <a class="l_s_m" href="{% url 'web:webpage' %}">Network</a>
+    <div class="l_div ">
+        <a class="l_s_m" id="everyone" href="{% url 'search:search' 'everyone' %}"><i class="ion ion-ios-people"></i> Mọi người</a>
+    </div>
+    <div class="l_div">
+        <a class="l_s_m" href="{% url 'activity:activityall' %}"><i class="ion ion-ios-flame"></i> Hoạt động</a>
+        <a class="l_s_s" href="{% url 'search:search' 'activity' %}?type=sport"><i class="fa fa-soccer-ball-o"></i> Thể thao</a>
+        <a class="l_s_s" href="{% url 'search:search' 'activity' %}?type=esport"><i class="fa fa-gamepad"></i> Esport</a>
+        <a class="l_s_s" href="{% url 'search:search' 'activity' %}?type=volunteer"><i class="fa fa-heart"></i> Từ thiện/Tình nguyện</a>
+        <a class="l_s_s" href="{% url 'search:search' 'activity' %}?type=clb"><i class="fa fa-handshake-o"></i> Clb/Đội nhóm</a>
+        <a class="l_s_s" href="{% url 'search:search' 'activity' %}?type=entertainment"><i class="ion ion-android-share-alt"></i> Vui chơi giải trí</a>
+        <a class="l_s_s" href="{% url 'search:search' 'activity' %}?type=exchange"><i class="fa fa-rss"></i> Giao lưu học hỏi</a>
+        <a class="l_s_s" href="{% url 'search:search' 'activity' %}?type=backpacking"><i class="fa fa-motorcycle"></i> Đi phượt</a>
+        <a class="l_s_s" href="{% url 'search:search' 'activity' %}?type=sing"><i class="ion ion-mic-b"></i> Ca hát</a>
+        <a class="l_s_s" href="{% url 'search:search' 'activity' %}?type=camp"><i class="ion ion-bonfire"></i> Hội trại</a>
+        <a class="l_s_s" href="{% url 'search:search' 'activity' %}?type=transgender"><i class="ion ion-transgender"></i>Thế giới thứ ba</a>
+        <a class="l_s_s" href="{% url 'activity:create' %}"><i class="fa fa-plus-square"></i> Tạo hoạt động</a>
+        <a class="l_s_s" href="{% url 'search:search' 'activity' %}?type=all"><i class="fa fa-search"></i> Tìm thêm ...</a>
+    </div>
+    <div class="l_div ">
+        <a class="l_s_m" href="{% url 'event:eventall' %}"><i class="fa fa-calendar"></i> Sự kiện</a>
+        <a class="l_s_s" href="{% url 'search:search' 'event' %}?type=fair"><i class="fa fa-map-pin"></i> Hội chợ/Triễn lãm</a>
+        <a class="l_s_s" href="{% url 'search:search' 'event' %}?type=music"><i class="fa fa-music"></i> Âm nhạc</a>
+        <a class="l_s_s" href="{% url 'search:search' 'event' %}?type=sport"><i class="ion ion-ios-color-filter" style="font-size:17px;"></i> Thể thao</a>
+        <a class="l_s_s" href="{% url 'search:search' 'event' %}?type=talk"><i class="fa fa-comments-o"></i> Hội thảo</a>
+        <a class="l_s_s" href="{% url 'search:search' 'event' %}?type=prom"><i class="fa fa-diamond"></i> Dạ hội</a>
+        <a class="l_s_s" href="{% url 'search:search' 'event' %}?type=tech"><i class="fa fa-bolt"></i> Khoa học/Công nghệ</a>
+        <a class="l_s_s" href="{% url 'event:create' %}"><i class="fa fa-plus-circle"></i> Tạo sự kiện</a>
+        <a class="l_s_s" href="{% url 'search:search' 'event' %}?type=all"><i class="fa fa-search"></i> Tìm thêm...</a>
+    </div>
+    <div class="l_div ">
+        <a class="l_s_m" href="{% url 'search:search' 'skill' %}"><i class="fa fa-cogs"></i> Kỹ năng</a>
+        <a class="l_s_s"><i class="fa fa-language"></i> Ngoại ngữ</a>
+        <a class="l_s_s"><i class="ion ion-chatbubbles"></i> Giao tiếp</a>
+        <a class="l_s_s"><i class="ion ion-ios-people"></i> Làm việc nhóm</a>
+    </div>
+    <div class="l_div ">
+        <a class="l_s_m" href="{% url 'contest:contestall' %}"><i class="fa fa-trophy"></i> Cuộc thi</a>
+        <a class="l_s_s" href="{% url 'search:search' 'contest' %}?type=academic"><i class="fa fa-book"></i> Học thuật</a>
+        <a class="l_s_s" href="{% url 'search:search' 'contest' %}?type=sing"><i class="fa fa-microphone"></i> Ca hát</a>
+        <a class="l_s_s" href="{% url 'search:search' 'contest' %}?type=talent"><i class="fa fa-star-o"></i> Tài năng</a>
+        <a class="l_s_s" href="{% url 'search:search' 'contest' %}?type=sport"><i class="fa fa-soccer-ball-o"></i> Thể thao</a>
+        <a class="l_s_s" href="{% url 'search:search' 'contest' %}?type=esport"><i class="ion ion-ios-game-controller-b"></i> Esport</a>
+        <a class="l_s_s" href="{% url 'search:search' 'contest' %}?type=intellect"><i class="ion ion-lightbulb"></i> Trí tuệ</a>
+        <a class="l_s_s" href="{% url 'search:search' 'contest' %}?type=media"><i class="fa fa-puzzle-piece"></i> Media</a>
+        <a class="l_s_s" href="{% url 'search:search' 'contest' %}?type=tech"><i class="ion ion-planet"></i> Khoa học/Công nghệ</a>
+        <a class="l_s_s" href="{% url 'contest:create' %}"><i class="fa fa-plus-square-o"></i> Tạo cuộc thi</a>
+        <a class="l_s_s" href="{% url 'search:search' 'contest' %}?type=all"><i class="fa fa-search"></i> Tìm thêm...</a>
+    </div>
+    <div class="l_div">
+        <a class="l_s_m" href="{% url 'search:search' 'scholarship' %}" ><i class="fa fa-mortar-board"></i> Học bổng</a>
+        <a class="l_s_s" href="{% url 'scholarship:create' %}"><i class="fa fa-plus"></i> Tạo học bổng</a>
+    </div>
+</div>
+<style>
+#left_web {
+    width : 100%;
+    font-size : 13px;
+}
+.l_div {
+    margin : 5px;
+    padding : 5px;
+    padding-right : 0;
+    margin-right : 0
+}
+.l_s_m {
+    cursor : pointer;
+    color : #fff;
+    display : inline-block;
+    font-size : 14px;
+    margin-bottom : 5px;
+}
+.l_s_m:hover {
+    color : #fff;
+    text-decoration : none;
+}
+.svg {
+    fill : #fff;
+    width : 11px;
+    height : 11px;
+}
+.l_s_s {
+    display : block;
+    margin-left : 15px;
+    color : #cacaca;
+    margin-top : 3px;
+}
+.l_s_s:hover {
+    color : #fff;
+    text-decoration : none;
+}
+</style>

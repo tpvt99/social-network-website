@@ -1,0 +1,22 @@
+{% if acts %}
+    {% for act in acts %}
+<div class="mi4_pf" data-id="{{ act.id }}" data-type="act">
+    <div class="mi4_pf1">
+        {% with a=forloop.counter0 %}
+            {% load web_extras1 %}
+            {% with b=acts_e|listitem:a %}
+                {% if b.image %}
+                <img src="{{ b.image.url }}" class="mi4_pf1i">
+                {% else %}
+                {% load staticfiles %}
+                <img src="{% static 'web/user.jpeg' %}" class="mi4_pf1i">
+                {% endif %}
+            {% endwith %}
+        {% endwith %}
+    </div>
+    <div class="mi4_pf2">
+        {{ act.act_description }} 
+    </div>
+</div>
+    {% endfor %}
+{% endif %}

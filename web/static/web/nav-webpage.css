@@ -1,0 +1,39 @@
+#nav-web-left {
+    float : left;
+    width : 200px;
+}
+#nav-web-middle {
+    float : left;
+    width : 800px;
+    margin-left: 20px;
+}
+#nav-web-right {
+    float : left;
+    width : 310px;
+    margin-left : 15px;
+    position : relative;
+}
+#nav-search-left {
+    float : left;
+    width : 200px;
+}
+#nav-search-middle {
+    float : left;
+    width : 700px;
+    margin-left: 20px;
+    margin-top : 20px;
+}
+#nav-search-right {
+    float : right;
+    width : 250px;
+    margin-left : 20px;
+    position : relative;
+}
+.right-absolute {
+    position :absolute;
+    top : 90px;
+    right : 0px;
+    bottom : 0px;
+    width : 100px;
+    text-align : center;
+}

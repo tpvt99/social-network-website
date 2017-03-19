@@ -1,0 +1,102 @@
+<p style="padding : 10px;color:#333;font-size:16px;">Thêm nơi ở của bạn</p>
+<form class="form-add-born" method="post" action="/profile/place/born/">
+    {% csrf_token %}
+    {% if bornplace %}
+    {% with z=bornplace|first %}
+    <input type="text" name="born-place" value="{{z.place}}" placeholder="Nơi ở (để trống nếu muốn xóa)" autocomplete="off">
+    {% endwith %}
+    {% else %}
+    <input type="text" name="born-place" placeholder="Nơi sinh (để trống nếu muốn xóa)" autocomplete="off">
+    {% endif %}
+    <p style="padding : 10px;color:#333;font-size:14px;">Chia sẻ với</p>
+    {% if bornplace %}
+    {% with t=bornplace|first %}
+        {% if t.privacy == 'public' %}
+        <label class="label">
+            <input type="radio" class="labe-in" name="share" value="public" checked><span style="padding-left:5px;">Công khai</span>
+        </label>
+        <label class="label">
+            <input type="radio" class="labe-in" name="share" value="friend"><span style="padding-left:5px;">Bạn bè</span>
+        </label>
+        <label class="label">
+            <input type="radio" class="labe-in" name="share" value="private"><span style="padding-left:5px;">Riêng tư</span>
+        </label>
+        {% elif t.privacy == 'friend' %}
+        <label class="label">
+            <input type="radio" class="labe-in" name="share" value="public"><span style="padding-left:5px;">Công khai</span>
+        </label>
+        <label class="label">
+            <input type="radio" class="labe-in" name="share" value="friend"checked><span style="padding-left:5px;" >Bạn bè</span>
+        </label>
+        <label class="label">
+            <input type="radio" class="labe-in" name="share" value="private"><span style="padding-left:5px;">Riêng tư</span>
+        </label>
+        {% elif t.privacy == 'private' %}
+        <label class="label">
+            <input type="radio" class="labe-in" name="share" value="public"><span style="padding-left:5px;">Công khai</span>
+        </label>
+        <label class="label">
+            <input type="radio" class="labe-in" name="share" value="friend"><span style="padding-left:5px;">Bạn bè</span>
+        </label>
+        <label class="label">
+            <input type="radio" class="labe-in" name="share" value="private" checked><span style="padding-left:5px;">Riêng tư</span>
+        </label>
+        {% endif %}
+    {% endwith %}
+    {% else %}
+    <label class="label">
+        <input type="radio" class="labe-in" name="share" value="public"><span style="padding-left:5px;">Công khai</span>
+    </label>
+    <label class="label">
+        <input type="radio" class="labe-in" name="share" value="friend"><span style="padding-left:5px;">Bạn bè</span>
+    </label>
+    <label class="label">
+        <input type="radio" class="labe-in" name="share" value="private"><span style="padding-left:5px;">Riêng tư</span>
+    </label>
+    {% endif %}
+    <p style="margin-top:10px;">
+    <button type="submit" class="btn btn-primary btn-sm" style="width:100px;text-align:center;">Cập nhật</button>
+    <button type="button" class="btn btn-default btn-sm" style="margin-left:10px;width:100px;text-align:center;" data-dismiss="modal">Hủy</button>
+    </p>
+</form>
+<style>
+input[name="born-place"] {
+    padding : 5px 10px;
+    border : 1px solid #aaa;
+    background-color : #fff;
+    border-radius : 5px;
+    width : 50%;
+}
+.form-add-born {
+    padding : 10px 20px;
+}
+.labe-in {
+    vertical-align : bottom;
+    width : 13px;
+    height : 13px;
+    padding : 0;
+    margin : 0;
+    position : relative;
+    top : -1px;
+    *overflow : hidden;
+}
+.label {
+    display : block;
+    margin-top : 5px;
+    padding-left : 15px;
+    text-indent : -15px;
+}
+</style>
+<script>
+$('.form-add-born').on('submit', function() {
+    if($('input[name="born-place"]').val().trim() !== '') {
+        var z = $('input[name="share"]:checked');
+        if(z.get(0)) {
+            return true;
+        } else{
+            alert('Xin chọn quyền riêng tư');
+            return false;
+        }
+    }
+});
+</script>

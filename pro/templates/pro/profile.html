@@ -1,0 +1,336 @@
+{% extends 'web/standardpage.html' %}
+
+{% block searchpage %}
+{% endblock %}
+
+{% block no_head %}
+{% endblock %}
+
+{% block no_global-main %}
+<div class="profile_bg">
+    {% if owner_user.info.background_pic %}
+    <div class="profile_background" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0),rgba(0,0,0,0.7)), url('{{owner_user.info.background_pic.url}}')">
+    {% else %}
+    <div class="profile_background" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0),rgba(0,0,0,0.7)), url('/static/web/index.jpg')">
+    {% endif %}
+        <div class="profile_bg_child">
+            {% if owner_user.info.profile_pic %}
+            <img class="profile_image" src="{{owner_user.info.profile_pic.url}}" />
+            {% else %}
+            <img class="profile_image" src="/static/web/user.jpeg">
+            {% endif %}
+            <p class="profile_name">{{owner_user.fullname}}</p>
+            {% if owner_user.info.head %}
+            <p class="profile_bio">{{owner_user.info.head}}</p>
+            {% endif %}
+        </div>
+        {% if request.user != owner_user %}
+        <div class="profile_bg_child2">
+            {% csrf_token %}
+            {% load friend_extras %}
+            {% with f=request.user|friend:owner_user %}
+            {% if f == 'decline' %}
+            <button class="pf_button pf_button_fr ev-addf" data-who="{{owner_user.id}}" data-action="decline" autocomplete="off">Hủy yêu cầu kết bạn</button>
+            {% elif f == 'accept' %}
+            <button class="pf_button pf_button_fr ev-addf" data-who="{{owner_user.id}}" data-action="refuse" autocomplete="off">Từ chối kết bạn</button>
+            <button class="pf_button pf_button_fr ev-addf" data-who="{{owner_user.id}}" data-action="accept" autocomplete="off">Chấp nhận</button>
+            {% elif f == 'connect' %}
+            <button class="pf_button pf_button_fr ev-addf" data-who="{{owner_user.id}}" data-action="connect" autocomplete="off">Kết bạn</button>
+            {% else %}
+            <button class="pf_button pf_button_fr ev-addf" data-action="friend" data-who="{{owner_user.id}}" disabled>Bạn bè</button>
+            {% endif %}
+            {% endwith %}
+            <button class="pf_button pf_button_mess">Gửi tin nhắn</button>
+        </div>
+        {% endif %}
+        <nav class="profile_bg_nav">
+            <ul class="bg-nav-ul">
+                <li class="bg-nav-li bg-nav-action">
+                    <a href="#">Dòng thời gian</a>
+                </li>
+                <!--
+                <li class="bg-nav-li">
+                    <a href="#">Ảnh</a>
+                </li>
+                <li class="bg-nav-li">
+                    <a href="#">Bạn bè</a>
+                </li> -->
+            </ul>
+        </nav>
+    </div>
+</div>
+<div class="profile_main">
+    <div class="profile_left">
+        <div style="padding-bottom:20px;">
+            <p class="pr_left_h">Giới thiệu</p>
+            <div>
+                {% if request.user == owner_user %}
+                <p class="image-edit link-edit">
+                <span class="fa fa-camera"></span>
+                <span>Cập nhật ảnh đại diện</span>
+                </p>
+                <p class="image-bg-edit link-edit">
+                <span class="fa fa-image"></span>
+                <span>Cập nhật ảnh nền</span>
+                </p>
+                <p class="link-edit name-edit">
+                <span class="fa fa-edit"></span>
+                <span>Thay đổi tên</span>
+                </p>
+                <p class="link-edit head-edit">
+                <span class="fa fa-plus"></span>
+                <span>Thêm châm ngôn sống</span>
+                </p>
+                {% endif %}
+            </div>
+            <div>
+                <p class="pr_left_h1">Khoảnh khắc</p>
+                {% load activity_extras %}
+                {% with t=owner_user|total_activity:'all' %}
+                <p class="pr_h_p p1">
+                <span class="fa fa-rocket"></span>
+                <span>Tham gia</span>
+                <span>{{t.quantity}}</span>
+                <span>hoạt động</span>
+                </p>
+                {% endwith %}
+                {% load event_extras %}
+                {% with t=owner_user|total_event:'all' %}
+                <p class="pr_h_p p2">
+                <span class="fa fa-calendar-check-o"></span>
+                <span>Dự</span>
+                <span>{{t.quantity}}</span>
+                <span>sự kiện</span>
+                </p>
+                {% endwith %}
+                {% load contest_extras %}
+                {% with t=owner_user|total_contest:'all' %}
+                <p class="pr_h_p p3">
+                <span class="fa fa-trophy"></span>
+                <span>Thử thách</span>
+                <span>{{t.quantity}}</span>
+                <span>cuộc thi</span>
+                </p>
+                {% endwith %}
+                <p class="pr_left_h2">Bản thân</p>
+            </div>
+        </div>
+
+        <div style="margin-top:25px;padding-bottom:20px;">
+            <p class="pr_left_h">Bạn bè</p>
+            {% if friends %}
+            <div class="profile_fr_flex">
+                {% for i in friends %}
+                <div style="width:90px;padding:5px;">
+                    {% if i.friend.info.profile_pic %}
+                    <a href="{% url 'pro:profile' %}?id={{i.friend.id}}" title="{{i.friend.fullname}}"><img class="profile_fr_img" src="{{i.friend.info.profile_pic.url}}"/></a>
+                    {% else %}
+                    <a href="{% url 'pro:profile' %}?id={{i.friend.id}}" title="{{i.friend.fullname}}"><img class="profile_fr_img" src="/static/web/user.jpeg"/></a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="profile_middle">
+        <div class="status">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<style>
+.profile_bg {
+    width : 100%;
+}
+.profile_background {
+    background-size : cover;
+    height : 400px;
+    background-position : center;
+    display : -webkit-flex;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    flex-flow : row nowrap;
+    position : relative;
+}
+.profile_bg_child {
+    text-align : center;
+    max-width : 350px;
+}
+.profile_image {
+    width : 130px;
+    height : 130px;
+    border-radius : 100%;
+}
+.profile_name {
+    font-size : 21px;
+    color : #fff;
+    font-weight : 600;
+    margin-top : 15px;
+}
+.profile_bio {
+    color : #fff;
+    font-size : 16px;
+}
+.profile_bg_child2 {
+    position : absolute;
+    bottom : 50px;
+    right : 50px;
+}
+.pf_button {
+    padding : 5px 10px;
+    border-radius : 5px;
+    min-width : 150px;
+}
+.pf_button_fr {
+    color : #fff;
+    background-color : transparent;
+    border : 1px solid #fff;
+}
+.pf_button_mess {
+    margin-left : 10px;
+    color : #fff;
+    background-color : transparent;
+    border : 1px solid #e67e22;
+}
+.profile_bg_nav {
+    position : absolute;
+    bottom : 0;
+    right : 0;
+    left : 0;
+}
+.bg-nav-ul {
+    display : -webkit-flex;
+    display : flex;
+    justify-content : center;
+    list-style : none;
+    padding : 0;
+    margin : 0;
+}
+.bg-nav-action::after {
+    content : "";
+    bottom : 0;
+    left : 50%;
+    position : absolute;
+    border-left : 10px solid transparent;
+    border-right : 10px solid transparent;
+    border-bottom : 10px solid #fff;
+    margin-left : -10px;
+}
+.bg-nav-li {
+    color : #ccc;
+    font-size : 16px;
+    position : relative;
+    display : block;
+    text-align : center;
+}
+.bg-nav-action {
+    color : #fff;
+}
+.bg-nav-li a:link,
+.bg-nav-li a:visited {
+    color : inherit;
+    margin : 0px 10px 18px;
+    display : block;
+    text-decoration : none;
+    transition : border-bottom 0.5s linear;
+    border-bottom : 1px solid transparent;
+}
+.bg-nav-li a:hover,
+.bg-nav-li a:active{
+    text-decoration : none;
+    border-bottom : 1px solid #3498db;
+}
+.profile_main {
+    display : -webkit-flex;
+    display : flex;
+    width : 1200px;
+    max-width : 100%;
+    margin : 30px auto 0px;
+    justify-content : flex-start;
+    align-items : flex-start;
+}
+</style>
+<style>
+/* LEFT */
+.profile_left > div{
+    background-color : #fff;
+    border : 1px solid #ccc;
+    border-radius : 5px;
+    width : 300px;
+}
+.pr_left_h {
+    font-size : 14px;
+    font-weight : 600;
+    padding : 10px 0px;
+    margin : 0px 10px;
+    border-bottom : 1px solid #ccc;
+}
+.pr_left_h1 {
+    color : #1abc9c;
+    font-size : 13px;
+    padding : 5px 0px;
+    margin : 0px 20px;
+    border-bottom : 1px solid #1abc9c;
+}
+.pr_left_h2 {
+    color : #f39c12;
+    font-size : 13px;
+    padding : 5px 0px;
+    margin : 0px 20px;
+    border-bottom : 1px solid #f39c12;
+}
+.pr_h_p {
+    font-size : 12px;
+    margin: 10px 20px;
+}
+.link-edit {
+    font-size : 13px;
+    padding : 10px 10px 0px;
+    cursor : pointer;
+    color : #3498db;
+}
+.profile_fr_flex {
+    display : -webkit-flex;
+    display : flex;
+    justify-content : space-around;
+    flex-flow : row wrap;
+}
+.profile_fr_img {
+    width : 80px;
+    height : 80px;
+    border-radius : 100%;
+}
+</style>
+<style>
+/* MIDDLE */
+.profile_middle {
+    margin-left : 25px;
+    width : 550px;
+    max-width : 100%;
+}
+</style>
+
+<script src="/static/pro/headbioname.js" type="text/javascript" async="true"></script>
+<script src="/static/pro/profile_pic.js" type="text/javascript" async="true"></script>
+<script src="/static/pro/background_pic.js" type="text/javascript" async="true"></script>
+<script src="/static/pro/profile_status.js" type="text/javascript"></script>
+<script src="/static/pro/friend_button.js" type="text/javascript"></script>
+
+{% endblock %}
+
+{% block middle %}
+
+<div class="general-info">
+    {% include 'pro/profile_information.html' %}
+</div>
+
+{% endblock %}

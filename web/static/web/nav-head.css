@@ -1,0 +1,194 @@
+#global-head {
+    background-color : #3498db;
+    background-color : #34495e;
+    color : #fff;
+    position : fixed;
+    top : 0;
+    right : 0;
+    left : 0;
+    z-index : 1000;
+    width : 100%;
+}
+#head-inner {
+    position : relative;
+    margin : 0 auto;
+    width : 1000px;
+    display : flex;
+    align-items : center;
+    padding : 3px 0px;
+}
+#head-navigator {
+    background-color : #fff;
+    color : #555;
+    padding : 5px 0px;
+    display : -webkit-flex;
+    display : flex;
+    justify-content : center;
+    border-bottom : 1px solid #ccc;
+}
+.head-vi {
+    padding : 0px 10px;
+    font-weight : normal;
+    height : 100%;
+    color : #7f8c8d;
+}
+.head-vi a.head-vi-active:link,
+.head-vi a.head-vi-active:visited {
+    border-bottom : 3px solid #3498db;
+    padding-bottom : 3px;
+}
+.head-vi a:hover,
+.head-vi a:active {
+    text-decoration : none;
+    border-bottom : 3px solid #3498db;
+    padding-bottom : 3px;
+}
+#global-main {
+    margin : 90px auto 0;
+    width : 1230px;
+    max-width : 100%;
+}
+.head1, .head2, .head3 {
+    color : #fff;
+    display : inline-block;
+}
+.head1_p {
+    font-weight: 600;
+    font-size : 20px;
+    margin : 0;
+}
+.head1_p>a:hover {
+    text-decoration : none;
+}
+.head3 {
+    margin-left: auto;
+}
+.head3>a:hover {
+    text-decoration : none;
+}
+.child-head-search {
+    position : relative;
+    display : table;
+    border-collapse : separate;
+    width : 450px;
+}
+.head_search {
+    background-color : #fff;
+    color : #333;
+    width : 100%;
+    border : 1px solid #aaa;
+    padding : 5px 10px;
+    border-radius : 3px;
+}
+.search-icon {
+    color : #888;
+    position : absolute;
+    top : 5px;
+    right : 15px;
+}
+.nav-search {
+    color : #333;
+    width : 500px;
+    padding-bottom : 0px;
+}
+textarea:hover, input:hover {
+    outline : none;
+}
+*:focus {
+    outline : none;
+}
+body {
+    background-color : #ecf0f1;
+}
+.head_pic {
+    width : 30px;
+    height : 30px;
+    border-radius : 3px;
+    border : 1px solid #ccc;
+}
+.mhspan {
+    cursor : pointer;
+    padding : 3px;
+    color : #fff;
+    position : relative;
+    display : flex;
+    align-items : center;
+}
+.mhspan_y {
+    color : #fff;
+}
+.mh-stat-noti {
+    position : absolute;
+    top : -7px;
+    right : -6px;
+    display:inline-block;
+    min-width : 8px;
+    text-align : center;
+    color : #fff;
+    font-size : 12px;
+    font-weight : 700;
+    vertical-align : middle;
+    line-height : 1.1;
+    background-color :#bf3b37;
+    border-radius : 8px;
+    padding : 2px 5px;
+}
+.mhspan:hover {
+    text-decoration : none;
+}
+.mhion {
+    font-size : 20px;
+}
+div.nav-stat {
+    width : 500px;
+    left : -400px;
+    min-height : 50px;
+    max-height : 500px;
+    overflow-y : scroll;
+}
+div.nav-friend {
+    color : #222;
+    width : 500px;
+    left : -300px;
+    min-height : 50px;
+    max-height : 500px;
+    overflow-y : scroll;
+}
+div.nav-settings {
+    width : 200px;
+    left : -10px;
+    color : #555;
+    font-size : 14px;
+    padding : 0px;
+}
+div.nav-mess {
+    width : 500px;
+    min-height : 50px;
+    max-height : 500px;
+    overflow-y : scroll;
+    left : -300px;
+    color : #333;
+}
+.navset-sp {
+    margin : 0;
+}
+.navset-child {
+    display : block;
+    color : #555;
+    padding : 5px;
+    padding-left : 20px;
+}
+.navset-parent {
+    color : #555;
+    padding : 5px;
+    padding-left : 10px;
+    padding-bottom : 10px;
+}
+.nav-set-div {
+    padding : 3px;
+    border-bottom : 1px solid #ddd;
+    font-size : 13px;
+}
+.btn {
+    padding : 5px;
+}

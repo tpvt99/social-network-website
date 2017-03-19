@@ -1,0 +1,25 @@
+{% load web_extras %}
+{% with z=stat.time_create|deltatime %}
+<span class="ptime" data-time="{{z}}"></span>
+<span>
+    <span class="dropdown">
+        <button id="dBut" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-link" type="button">
+            {% if stat.privacy == 'public' %}
+            <span class="rensp_pr"><span class="fa fa-globe"></span></span>
+            {% elif stat.privacy == 'friend' %}
+            <span class="rensp_pr"><span class="ion ion-person-stalker"></span></span>
+            {% elif stat.privacy == 'private' %}
+            <span class="rensp_pr"><span class="fa fa-lock"></span></span>
+            {% endif %}
+        </button>
+    {% if stat.user == request.user %}
+        <div class="dropdown-menu stat_pri" aria-labelledby="dBut">
+            {% csrf_token%}
+            <div class="prip_p" data-stat="{{stat.id}}" data-privacy="public"><span class="fa fa-globe"></span><span style="margin-left:5px;">Công khai</span></div>
+            <div class="prip_p" data-stat="{{stat.id}}" data-privacy="friend"><span class="ion ion-person-stalker"></span><span style="margin-left:5px;">Bạn bè</span></div>
+            <div class="prip_p" data-stat="{{stat.id}}" data-privacy="private"><span class="fa fa-lock"></span><span style="margin-left:5px;">Riêng tư</span></div>
+        </div>
+    {% endif %}
+    </span>
+</span>
+{% endwith %}

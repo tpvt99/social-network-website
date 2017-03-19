@@ -1,0 +1,36 @@
+<div id="left_nav">
+    <div class="left_head">
+        <a href="{% url 'web:webpage' %}" style="color:#fff;">Network</a>
+    </div>
+    <div class="left_main">
+        <a class="l_item" href="{% url 'pro:profile' %}?id={{owner_user.id}}&w=main">Trang cá nhân</a>
+        <a class="l_item" href="{% url 'pro:profile' %}?id={{owner_user.id}}&w=info"> Thông tin</a>
+        <a class="l_item" href="{% url 'pro:profile' %}?id={{owner_user.id}}&w=friend"> Bạn bè</a>
+    </div>
+</div>
+<style>
+#left_nav {
+    padding : 10px 15px;
+    font-size : 16px;
+    color : #fff;
+}
+.l_item {
+    padding : 10px 10px;
+    display : block;
+    cursor : pointer;
+    color : #bbb;
+}
+.l_item:hover {
+    color : #fff;
+    text-decoration : none;
+}
+.ls-label {
+    position : relative;
+}
+.ls-icon {
+    position : absolute;
+    top : 7px;
+    left : 4px;
+    color : #333;
+}
+</style>

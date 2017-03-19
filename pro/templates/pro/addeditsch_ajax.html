@@ -1,0 +1,97 @@
+{% if edu %}
+<form class="sch-form" method="post" action="/profile/edu/sch/edit/" >
+{% else %}
+<form class="sch-form" method="post" action="/profile/edu/sch/add/">
+{% endif %}
+    {% csrf_token %}
+    {% if edu %}
+    <input type="hidden" name="edu" value="{{edu.id}}">
+    <input type="text" name="school" class="sch-in" autocomplete="off" placeholder="Tên trường(đề trống nếu muốn xóa)" value="{{edu.school}}" >
+    {% else %}
+    <input type="text" name="school" class="sch-in" autocomplete="off" placeholder="Tên trường">
+    {% endif %}
+    <p>
+        <span>Từ</span>
+        <select name="begin_year">
+        </select>
+        <span>đến</span>
+        <select name="end_year">
+        </select>
+    <p>
+    <p>
+    <span>Quyền riêng tư</span>
+    <select name="privacy">
+        {% if edu %}
+            {% if edu.privacy == 'private' %}
+                <option value="private" selected>Riêng tư</option>
+                <option value="public">Công khai</option>
+                <option value="friend">Bạn bè</option>
+            {% elif edu.privacy == 'public' %}
+                <option value="private">Riêng tư</option>
+                <option value="public" selected>Công khai</option>
+                <option value="friend">Bạn bè</option>
+            {% elif edu.privacy == 'friend' %}
+                <option value="private">Riêng tư</option>
+                <option value="public">Công khai</option>
+                <option value="friend" selected>Bạn bè</option>
+            {% endif %}
+        {% else %}
+            <option value="private">Riêng tư</option>
+            <option value="public">Công khai</option>
+            <option value="friend">Bạn bè</option>
+        {% endif %}
+    </select>
+    </p>
+    {% if edu %}
+    <button type="submit" class="btn btn-primary btn-sm" style="min-width:100px;">Cập nhật</button>
+    {% else %}
+    <button type="submit" class="btn btn-primary btn-sm" style="width:100px;">Lưu</button>
+    {% endif %}
+    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" style="width:100px;">Hủy</button>
+</form>
+
+<style>
+.sch-form {
+    padding : 10px;
+}
+select[name="privacy"] {
+    padding : 3px 6px;
+    background-color : #fff;
+    border : 1px solid #ccc;
+    border-radius : 5px;
+    margin-left : 5px;
+}
+select[name="begin_year"], select[name="end_year"] {
+    padding : 5px;
+    background-color : #fff;
+    border : 1px solid #ccc;
+    border-radius : 5px;
+    width : 65px;
+}
+.sch-in {
+    padding : 5px 10px;
+    background-color : #fff;
+    border : 1px solid #ccc;
+    border-radius : 5px;
+    width : 50%;
+    margin-bottom : 10px;
+}
+</style>
+<script>
+(function() {
+    var b = $('select[name="begin_year"]');
+    var e = $('select[name="end_year"]');
+for(var i = 1970; i <= parseInt(new Date().getFullYear());i++) {
+
+    b.append(['<option value="',i,'">',i,'</option>'].join(''));
+    e.append(['<option value="',i,'">',i,'</option>'].join(''));
+}
+b.on('change', function() {
+    var t = parseInt($(this).val());
+    e.empty();
+    for(i =t;i< new Date().getFullYear();i++) {
+    e.append(['<option value="',i,'">',i,'</option>'].join(''));
+    }
+});
+})();
+</script>

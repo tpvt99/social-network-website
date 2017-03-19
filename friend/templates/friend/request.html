@@ -1,0 +1,69 @@
+{% extends 'web/standardpage.html' %}
+
+{% block con2 %}
+{% endblock %}
+
+{% block nav_middle_cont %}
+{% for request in requests %}
+<div class="ev-who">
+    <div class="who-img">
+        {% if request.inviter.info.profile_pic %}
+        <img src="{{request.inviter.info.profile_pic.url}}" class="ev-img">
+        {% else %}
+        <img src="/static/web/user.jpeg" class="ev-img">
+        {% endif %}
+        {% csrf_token %}
+            <button type="button" class="ev-add btn btn-danger btn-sm" data-who="{{request.inviter.id}}" data-action="refuse" autocomplete="off"><span style="margin-left:5px;">Hủy kết bạn</span></button>
+            <button type="button" class="ev-add btn btn-sm btn-default" data-who="{{request.inviter.id}}" data-action="accept" autocomplete="off"><span style="margin-left:5px;">Chấp nhận</span></button>
+    </div>
+    <div class="who-info">
+        <p class="info-name"><a href="{% url 'pro:profile' %}?id={{request.inviter.id}}">{{request.inviter.fullname}}</a></p>
+        {% load activities_extras %}
+        {% with t=request.inviter|total_activities %}
+        <p><span>Tham gia</span><span style="margin-left:5px;">{{t}}</span><span style="margin-left:5px;">hoạt động</span></p>
+        {% endwith %}
+        {% load events_extras %}
+        {% with t=request.inviter|total_events %}
+        <p><span>Tham gia</span><span style="margin-left:5px;">{{t}}</span><span style="margin-left:5px;">sự kiện</span></p>
+        {% endwith %}
+    </div>
+</div>
+{% endfor %}
+<style>
+.ev-who {
+    width : 500px;
+    background-color : #fff;
+    border : 1px solid #ddd;
+    border-radius : 5px;
+    overflow : auto;
+    margin-bottom : 20px;
+}
+.who-img {
+    padding : 10px;
+    float : left;
+    width : 170px;
+}
+.who-info {
+    float : left;
+    width : 320px;
+    padding : 10px;
+}
+.ev-img {
+    width : 150px;
+    height : 150px;
+    border-radius : 3px;
+    border : 1px solid #e1e1e1;
+}
+.info-name {
+    font-size : 16px;
+    font-color : #333;
+    font-weight : 600;
+}
+.ev-add {
+    margin-top : 10px;
+    width : 100%;
+    border-radius : 5px;
+}
+</style>
+<script type="text/javascript" src="/static/search/friend.js"></script>
+{% endblock %}

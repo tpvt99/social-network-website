@@ -1,0 +1,10 @@
+<form method="post" class="hh-form" action="/profile/bio/" style="padding : 20px;">
+    {% csrf_token %}
+    {% if info %}
+    <p>Cập nhật miêu tả về bạn</p>
+    {% else %}
+    <p>Thêm miêu tả về bạn</p>
+    {% endif %}
+    <input type="text" name="bio" style="padding:5px 10px;width:100%;border:1px solid #ccc;border-radius:5px;" value="{{info.bio}}" placeholder="Miêu tả của bạn" autocomplete="off" maxlength="100">
+    <p><button type="submit" class="btn btn-sm btn-primary" style="margin-top:10px;width:100px;">Lưu</button></p>
+</form>

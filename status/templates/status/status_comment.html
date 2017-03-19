@@ -1,0 +1,23 @@
+{% with t=stat.status_statuscomment_status.all %}
+{% for i in t %}
+    <div class="com-content">
+        <div class="com-content-img">
+            {% if i.user.info.profile_pic %}
+            <img class="com-con-img" src="{{i.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="com-con-img" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="com-content-2">
+            <p style="margin:0">
+            <span style="color:#333;font-size:13px;font-weight:600;">{{i.user.fullname}}</span>
+            <span style="font-size:13px;">{{i.comment}}</span>
+            </p>
+            {% load web_extras %}
+            {% with z=i.time_create|deltatime %}
+            <p class="ptime" data-time="{{z}}" style="margin:0;"></p>
+            {% endwith %}
+        </div>
+    </div>
+{% endfor %}
+{% endwith %}

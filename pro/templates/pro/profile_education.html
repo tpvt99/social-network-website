@@ -1,0 +1,286 @@
+<div class="info-education">
+    <div class="edu-head">
+        <p class="edu-headp">Học vấn</p>
+    </div>
+    <div class="edu-main">
+        {% load pro_extras %}
+        <div class="edu-university">
+            <p class="edu-university-p">Trường đại học</p>
+            {% with a=owner_user.user_infoeducationuniversity_user.all %}
+            {% with pri=request.user|render_friend_button:owner_user %}
+            {% if a %}
+                {% for i in a %}
+                {% if i.privacy == 'private' %}
+                    {% if request.user == owner_user %}
+                        <div class="edu-content">
+                            <p>
+                            {% if i.major %}
+                                <span>Học</span>
+                                <span class="a-sp">{{i.major}}</span>
+                                <span>tại</span>
+                            {% else %}
+                                <span>Học tại</span>
+                            {% endif %}
+                                <span class="a-sp">{{i.university}}</span>
+                            </p>
+                            <p>
+                            <span>Từ</span>
+                            <span class="a-sp">{{i.time_begin|date:'Y'}}</span>
+                            <span>đến</span>
+                            <span class="a-sp">{{i.time_end|date:'Y'}}</span>
+                            </p>
+                        </div>
+                    {% endif %}
+                {% elif i.privacy == 'friend' %}
+                    {% if pri == 'friend' or pri == 'self' %}
+                        <div class="edu-content">
+                            <p>
+                            {% if i.major %}
+                                <span>Học</span>
+                                <span class="a-sp">{{i.major}}</span>
+                                <span>tại</span>
+                            {% else %}
+                                <span>Học tại</span>
+                            {% endif %}
+                                <span class="a-sp">{{i.university}}</span>
+                            </p>
+                            <p>
+                            <span>Từ</span>
+                            <span class="a-sp">{{i.time_begin|date:'Y'}}</span>
+                            <span>đến</span>
+                            <span class="a-sp">{{i.time_end|date:'Y'}}</span>
+                            </p>
+                        </div>
+                    {% endif %}
+                {% elif i.privacy == 'public' %}
+                        <div class="edu-content">
+                            <p>
+                            {% if i.major %}
+                                <span>Học</span>
+                                <span class="a-sp">{{i.major}}</span>
+                                <span>tại</span>
+                            {% else %}
+                                <span>Học tại</span>
+                            {% endif %}
+                                <span class="a-sp">{{i.university}}</span>
+                            </p>
+                            <p>
+                            <span>Từ</span>
+                            <span class="a-sp">{{i.time_begin|date:'Y'}}</span>
+                            <span>đến</span>
+                            <span class="a-sp">{{i.time_end|date:'Y'}}</span>
+                            </p>
+                        </div>
+                {% endif %}
+                    {% if request.user == owner_user %}
+                    <p class="edit-uni" data-edu="{{i.id}}">Chỉnh sửa</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+                {% if request.user == owner_user %}
+                    <p class="add-uni">Thêm thông tin về trường đại học</p>
+                {% endif %}
+            {% endwith %}
+            {% endwith %}
+        </div>
+        
+        <div class="edu-school">
+            <p class="edu-school-p">Trường trung học</p>
+            {% with a=owner_user.user_infoeducationschool_user.all %}
+            {% with pri=request.user|render_friend_button:owner_user %}
+            {% if a %}
+                {% for i in a %}
+                {% if i.privacy == 'private' %}
+                    {% if request.user == owner_user %}
+                        <div class="edu-content">
+                            <p>
+                            <span>Học tại</span>
+                            <span class="a-sp">{{i.school}}</span>
+                            </p>
+                            <p>
+                            <span>Từ</span>
+                            <span class="a-sp">{{i.time_begin|date:'Y'}}</span>
+                            <span>đến</span>
+                            <span class="a-sp">{{i.time_end|date:'Y'}}</span>
+                            </p>
+                        </div>
+                    {% endif %}
+                {% elif i.privacy == 'friend' %}
+                    {% if pri == 'friend' or pri == 'self' %}
+                        <div class="edu-content">
+                            <p>
+                            <span>Học tại</span>
+                            <span class="a-sp">{{i.school}}</span>
+                            </p>
+                            <p>
+                            <span>Từ</span>
+                            <span class="a-sp">{{i.time_begin|date:'Y'}}</span>
+                            <span>đến</span>
+                            <span class="a-sp">{{i.time_end|date:'Y'}}</span></p>
+                        </div>
+                    {% endif %}
+                {% elif i.privacy == 'public' %}
+                    <div class="edu-content">
+                        <p>
+                        <span>Học tại</span>
+                        <span class="a-sp">{{i.school}}</span>
+                        </p>
+                        <p>
+                        <span>Từ</span>
+                        <span class="a-sp">{{i.time_begin|date:'Y'}}</span>
+                        <span>đến</span>
+                        <span class="a-sp">{{i.time_end|date:'Y'}}</span></p>
+                    </div>
+                {% endif %}
+                {% if request.user == owner_user %}
+                <p class="edit-sch" data-edu="{{i.id}}">Chỉnh sửa</p>
+                {% endif %}
+                {% endfor %}
+            {% endif %}
+                {% if request.user == owner_user %}
+                <p class="add-sch">Thêm thông tin về trường học</p>
+                {% endif %}
+            {% endwith %}
+            {% endwith %}
+        </div>
+    </div>
+</div>
+<style>
+.info-education{
+    margin-top : 30px;
+    width : 800px;
+    background-color : #fff;
+    margin-left : 50px;
+}
+.edu-headp {
+    font-size : 16px;
+    padding : 20px;
+    text-align : center;
+    font-weight : 600;
+    border-bottom : 1px solid #ddd;
+}
+.edu-main {
+    padding : 20px;
+}
+.add-sch {
+    font-size : 15px;
+    color : #337ab7;
+    cursor : pointer;
+}
+.add-sch:hover {
+    text-decoration : underline;
+}
+.add-uni {
+    font-size : 15px;
+    color : #337ab7;
+    cursor : pointer;
+}
+.add-uni:hover {
+    text-decoration : underline;
+}
+.edu-content {
+    font-size : 14px;
+    margin-left : 20px;
+}
+.a-sp {
+    cursor : pointer;
+    color : #337ab7;
+}
+.edu-content:hover {
+    text-decoration : underline;
+    cursor : pointer;
+}
+.edit-sch, .edit-uni {
+    margin-left : 20px;
+    font-size : 13px;
+    cursor : pointer;
+}
+.edit-sch:hover, .edit-uni:hover {
+    text-decoration : underline;
+}
+.edu-major {
+    font-size : 13px;
+    margin-left : 30px;
+}
+.edu-university-p, .edu-school-p {
+    font-size : 16px;
+    border-bottom : 1px solid #ddd;
+}
+.edu-university,.edu-school {
+    color : #888;
+    margin-left : 20px;
+    margin-bottom : 20px;
+}
+</style>
+<script>
+function AddSch() {
+    $('.modal').find('.modal-content').empty().append('<p style="padding:10px 20px;text-align:center;"><span class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></span><p>');
+    $('.modal').modal({
+        keyborad : false,
+        show : true,
+    });
+    $.ajax({
+        method:'GET',
+        url:'/profile/edu/sch/add/',
+        success:function(data) {
+            $('.modal').find('.modal-content').empty().append(data);
+        }
+    });
+}
+$('.add-sch').on('click', function() {
+    AddSch();
+});
+function EditSch($this) {
+    $('.modal').find('.modal-content').empty().append('<p style="padding:10px 20px;text-align:center;"><span class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></span><p>');
+    $('.modal').modal({
+        keyborad : false,
+        show : true,
+    });
+    $.ajax({
+        method:'GET',
+        url:'/profile/edu/sch/edit/',
+        data: {'id':$this[0].dataset.edu},
+        success:function(data) {
+            $('.modal').find('.modal-content').empty().append(data);
+        }
+    });
+}
+$('.edit-sch').on('click', function() {
+    EditSch($(this));
+});
+function AddUni() {
+    $('.modal').find('.modal-content').empty().append('<p style="padding:10px 20px;text-align:center;"><span class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></span><p>');
+    $('.modal').modal({
+        keyborad : false,
+        show : true,
+    });
+    $.ajax({
+        method:'GET',
+        url:'/profile/edu/uni/add/',
+        success:function(data) {
+            $('.modal').find('.modal-content').empty().append(data);
+        }
+    });
+}
+$('.add-uni').on('click', function() {
+    AddUni();
+});
+function EditUni($this) {
+    $('.modal').find('.modal-content').empty().append('<p style="padding:10px 20px;text-align:center;"><span class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></span><p>');
+    $('.modal').modal({
+        keyborad : false,
+        show : true,
+    });
+    $.ajax({
+        method:'GET',
+        url:'/profile/edu/uni/edit/',
+        data: {'id':$this[0].dataset.edu},
+        success:function(data) {
+            $('.modal').find('.modal-content').empty().append(data);
+        }
+    });
+}
+$('.edit-uni').on('click', function() {
+    EditUni($(this));
+});
+</script>

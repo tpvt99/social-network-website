@@ -1,0 +1,33 @@
+<button class="ri-g-b ri-g-b1">Tạo phẩm chất</button>
+<style>
+.ri-g-b {
+    font-size : 12px;
+    padding : 6px 6px;
+    margin : 5px 0px;
+    color : #fff;
+}
+.ri-g-b1 {
+    background-color : #3998db;
+    border: 1px solid #3998db;
+    border-radius : 5px;
+}
+</style>
+<script>
+function AddTrait() {
+    $('.modal').find('.modal-content').empty().append('<p style="padding:10px 20px;text-align:center;"><span class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></span><p>');
+    $('.modal').modal({
+        keyborad : false,
+        show : true,
+    });
+    $.ajax({
+        method:'GET',
+        url:'/trait/add/',
+        success:function(data) {
+            $('.modal').find('.modal-content').empty().append(data);
+        }
+    });
+}
+$('.ri-g-b').on('click', function() {
+    AddTrait();
+});
+</script>

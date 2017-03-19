@@ -1,0 +1,11 @@
+{% load web_extras %}
+{% with z=stat.time_create|deltatime %}
+<span class="ptime" data-time="{{z}}"></span>
+<span>
+    <button id="dBut" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-link" type="button" title='Bạn không thể thay đổi được quyền riêng tư vì tính minh bạch của bài viết'>
+        {% if stat.privacy == 'public' %}
+        <span class="rensp_pr"><span class="fa fa-globe"></span></span>
+        {% endif %}
+    </button>
+</span>
+{% endwith %}

@@ -1,0 +1,31 @@
+<form method="post" id="mi1bioform">
+    {% csrf_token%}
+    {% if request.user.info.bio %}
+        <textarea id="mi1ft">{{ request.user.info.bio }}</textarea>
+    {% else %}
+        <textarea id="mi1ft" placeholder="Giới thiệu về bạn" rows="7"></textarea>
+    {% endif %}
+    <button type="button" class="btnx">Hủy</button>
+    <button type="submit" class="btnx btn-primary">Lưu</button>
+</form>
+<style>
+#mi1ft {
+    resize : none;
+    width : 100%;
+    padding : 5px;
+    border : 1px solid #fafafa;
+}
+.btnx {
+    float : right;
+    margin-top : 5px;
+    margin-left : 5px;
+    padding : 5px;
+    font-size : 14px;
+    cursor : pointer;
+    white-space : nowrap;
+    border: 1px solid #ededed;
+}
+.btnx:last-of-item {
+    margin-left : 0px;
+}
+</style>

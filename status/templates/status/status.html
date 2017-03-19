@@ -1,0 +1,650 @@
+{% for stat in status %}
+<div class="stat-cont">
+    {% if stat.status_type == 'act' %}
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.act.user.info.profile_pic %}
+            <img class="user-image" src="{{stat.act.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.act.user.id}}" class="info-name">{{stat.act.user.fullname}}</a></span>
+            <span>tạo hoạt động</span>
+            {% if stat.act.head %}
+            <span style="font-weight:600;"><a href="{% url 'act:act' stat.act.id %}" style="color:inherit">{{stat.act.head}}</a></span>
+            {% endif %}
+            {% with t=stat.act.act_actfriend_act.all %}
+            {% with a=t|length %}
+            {% if t %}
+                <span> cùng với</span>
+                {% if a == 1 %}
+                    {% for i in t %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    {% endfor %}
+                {% elif a == 2 %}
+                    {% for i in t %}
+                    {% if forloop.counter == 1 %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    <span>và</span>
+                    {% else %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    {% endif %}
+                    {% endfor %}
+                {% elif a > 2 %}
+                    {% for i in t %}
+                    {% if forloop.counter == a|add:-1 %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    <span>và</span>
+                    {% else %}
+                        {% if forloop.counter == a %}
+                        <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                        {% else %}
+                        <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                        <span>,</span>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+            {% endwith %}
+            {% endwith %}
+            </p>
+            <div>
+            {% include 'status/status_time.html' %}
+            </div>
+        </div>
+    </div>
+    <div class="stat-main">
+        <div class="stat-head">
+            {% if stat.act.des %}
+            <p class="main-p">
+                {{stat.act.des|linebreaksbr}}
+            </p>
+            {% endif %}
+            {% if stat.act.image %}
+            <p class="image-p" style="margin:0;">
+            <img src="{{stat.act.image.url}}" class="cont-image">
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    {% elif stat.status_type == 'post' %}
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.post.user.info.profile_pic %}
+            <img class="user-image" src="{{stat.post.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.post.user.id}}" class="info-name">{{stat.post.user.fullname}}</a></span>
+            {% with t=stat.post.postfriend_set.all %}
+            {% with a=t|length %}
+            {% if t %}
+                <span> cùng với</span>
+                {% if a == 1 %}
+                    {% for i in t %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    {% endfor %}
+                {% elif a == 2 %}
+                    {% for i in t %}
+                    {% if forloop.counter == 1 %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    <span>và</span>
+                    {% else %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    {% endif %}
+                    {% endfor %}
+                {% elif a > 2 %}
+                    {% for i in t %}
+                    {% if forloop.counter == a|add:-1 %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    <span>và</span>
+                    {% else %}
+                        {% if forloop.counter == a %}
+                        <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                        {% else %}
+                        <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                        <span>,</span>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+            {% endwith %}
+            {% endwith %}
+            </p>
+            <div>
+            {% include 'status/status_time.html' %}
+            </div>
+        </div>
+    </div>
+    <div class="stat-main">
+        <div class="stat-head">
+            {% if stat.post.text %}
+            <p class="main-p">
+                {{stat.post.text|linebreaksbr }}
+            </p>
+            {% endif %}
+            {% if stat.post.image %}
+            <p class="image-p" style="margin:0;">
+            <img src="{{stat.post.image.url}}" class="cont-image">
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    {% elif stat.status_type == 'actpost' %}
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.actpost.user.info.profile_pic %}
+            <img class="user-image" src="{{stat.actpost.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.actpost.user.id}}" class="info-name">{{stat.actpost.user.fullname}}</a></span>
+            <span><span> trong hoạt động</span><a href="{% url 'act:act' stat.actpost.act.id %}" style="margin-left:5px;">{{stat.actpost.act.head}}</a></span>
+            {% with t=stat.actpost.act_actposttagfriend_actpost.all %}
+            {% with a=t|length %}
+            {% if t %}
+                <span> cùng với</span>
+                {% if a == 1 %}
+                    {% for i in t %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    {% endfor %}
+                {% elif a == 2 %}
+                    {% for i in t %}
+                    {% if forloop.counter == 1 %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    <span>và</span>
+                    {% else %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    {% endif %}
+                    {% endfor %}
+                {% elif a > 2 %}
+                    {% for i in t %}
+                    {% if forloop.counter == a|add:-1 %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    <span>và</span>
+                    {% else %}
+                        {% if forloop.counter == a %}
+                        <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                        {% else %}
+                        <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                        <span>,</span>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+            {% endwith %}
+            {% endwith %}
+            </p>
+            <div>
+                {% include 'status/status_time.html' %}
+            </div>
+        </div>
+    </div>
+    <div class="stat-main">
+        <div class="stat-head">
+            <p class="des-p">{{stat.actpost.des|linebreaksbr}}</p>
+            {% if stat.actpost.image %}
+            <p class="image-p" style="margin:0;">
+            <img src="{{stat.actpost.image.url}}" class="cont-image">
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    {% elif stat.status_type == 'activitiespost' %}
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.activitiespost.user.info.profile_pic %}
+            <img class="user-image" src="{{stat.activitiespost.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.activitiespost.user.id}}" class="info-name">{{stat.activitiespost.user.fullname}}</a></span>
+            {% load activity_extras %}
+            {% with a=stat.activitiespost.activity.head|addslash %}
+            <span><span> trong hoạt động</span><a href="{% url 'activity:activity' stat.activitiespost.activity.id a %}" style="margin-left:5px;">{{stat.activitiespost.activity.head}}</a></span>
+            {% endwith %}
+            {% with t=stat.activitiespost.activities_activitiespostfriend_activitiespost.all %}
+            {% with a=t|length %}
+            {% if t %}
+                <span> cùng với</span>
+                {% if a == 1 %}
+                    {% for i in t %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    {% endfor %}
+                {% elif a == 2 %}
+                    {% for i in t %}
+                    {% if forloop.counter == 1 %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    <span>và</span>
+                    {% else %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    {% endif %}
+                    {% endfor %}
+                {% elif a > 2 %}
+                    {% for i in t %}
+                    {% if forloop.counter == a|add:-1 %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    <span>và</span>
+                    {% else %}
+                        {% if forloop.counter == a %}
+                        <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                        {% else %}
+                        <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                        <span>,</span>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+            {% endwith %}
+            {% endwith %}
+            </p>
+            <div>
+                {% include 'status/status_time.html' %}
+            </div>
+        </div>
+    </div>
+    <div class="stat-main">
+        <div class="stat-head">
+            <p class="des-p">{{stat.activitiespost.text|linebreaksbr}}</p>
+            {% if stat.activitiespost.image %}
+            <p class="image-p" style="margin:0;">
+            <img src="{{stat.activitiespost.image.url}}" class="cont-image">
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    {% elif stat.status_type == 'activitypost' %}
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.activitypost.user.info.profile_pic %}
+            <img class="user-image" src="{{stat.activitypost.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.activitypost.user.id}}" class="info-name">{{stat.activitypost.user.fullname}}</a></span>
+            {% load activity_extras %}
+            {% with a=stat.activitypost.activity.head|addslash %}
+            <span><span> trong hoạt động</span><a href="{% url 'activity:activity' stat.activitypost.activity.id a %}" style="margin-left:5px;">{{stat.activitypost.activity.head}}</a></span>
+            {% endwith %}
+            </p>
+            <div>
+                {% include 'status/status_time.html' %}
+            </div>
+        </div>
+    </div>
+    <div class="stat-main">
+        <div class="stat-head">
+            <p class="des-p">{{stat.activitypost.text|linebreaksbr}}</p>
+            {% if stat.activitypost.image %}
+            <p class="image-p" style="margin:0;">
+            <img src="{{stat.activitypost.image.url}}" class="cont-image">
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    {% elif stat.status_type == 'eventpost' %}
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.eventpost.user.info.profile_pic %}
+            <img class="user-image" src="{{stat.eventpost.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.eventpost.user.id}}" class="info-name">{{stat.eventpost.user.fullname}}</a></span>
+            {% load activity_extras %}
+            {% with a=stat.eventpost.event.head|addslash %}
+            <span><span> trong hoạt động</span><a href="{% url 'event:event' stat.eventpost.event.id a %}" style="margin-left:5px;">{{stat.eventpost.event.head}}</a></span>
+            {% endwith %}
+            </p>
+            <div>
+                {% include 'status/status_time.html' %}
+            </div>
+        </div>
+    </div>
+    <div class="stat-main">
+        <div class="stat-head">
+            <p class="des-p">{{stat.eventpost.text|linebreaksbr}}</p>
+            {% if stat.eventpost.image %}
+            <p class="image-p" style="margin:0;">
+            <img src="{{stat.eventpost.image.url}}" class="cont-image">
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    {% elif stat.status_type == 'eventspost' %}
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.eventspost.user.info.profile_pic %}
+            <img class="user-image" src="{{stat.eventspost.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.eventspost.user.id}}" class="info-name">{{stat.eventspost.user.fullname}}</a></span>
+            {% load activity_extras %}
+            {% with a=stat.eventspost.event.head|addslash %}
+            <span><span> trong sự kiện</span><a href="{% url 'event:event' stat.eventspost.event.id a %}" style="margin-left:5px;">{{stat.eventspost.event.head}}</a></span>
+            {% endwith %}
+            {% with t=stat.eventspost.events_eventspostfriend_eventspost.all %}
+            {% with a=t|length %}
+            {% if t %}
+                <span> cùng với</span>
+                {% if a == 1 %}
+                    {% for i in t %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    {% endfor %}
+                {% elif a == 2 %}
+                    {% for i in t %}
+                    {% if forloop.counter == 1 %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    <span>và</span>
+                    {% else %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    {% endif %}
+                    {% endfor %}
+                {% elif a > 2 %}
+                    {% for i in t %}
+                    {% if forloop.counter == a|add:-1 %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    <span>và</span>
+                    {% else %}
+                        {% if forloop.counter == a %}
+                        <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                        {% else %}
+                        <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                        <span>,</span>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+            {% endwith %}
+            {% endwith %}
+            </p>
+            <div>
+                {% include 'status/status_time.html' %}
+            </div>
+        </div>
+    </div>
+    <div class="stat-main">
+        <div class="stat-head">
+            <p class="des-p">{{stat.eventspost.text|linebreaksbr}}</p>
+            {% if stat.eventspost.image %}
+            <p class="image-p" style="margin:0;">
+            <img src="{{stat.eventspost.image.url}}" class="cont-image">
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    {% elif stat.status_type == 'create-activity' %}
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.activity.user.info.profile_pic %}
+            <img class="user-image" src="{{stat.activity.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.activity.user.id}}" class="info-name">{{stat.activity.user.fullname}}</a></span>
+            </p>
+            <div>
+                {% include 'status/status_time.html' %}
+            </div>
+        </div>
+    </div>
+    <div class="stat-main">
+        <div class="stat-head">
+            <p class="head-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.activity.user.id}}">{{stat.activity.user.fullname}}</a></span>
+            <span>đã tạo hoạt động</span>
+            {% load activity_extras %}
+            {% with t=stat.activity.head|addslash %}
+            <span><a href="{% url 'activity:activity' stat.activity.id t %}">{{stat.activity.head}}.</a></span>
+            <span>Nhấn vào hoạt động để đi tới thông tin chi tiết hoạt động hoặc gửi lời mời tham gia.</span>
+            {% endwith %}
+            </p>
+        </div>
+        <div class="stat-info">
+            {% with t=stat.activity.head|addslash %}
+            <p style="font-size:15px;"><a href="{% url 'activity:activity' stat.activity.id t %}">{{stat.activity.head}}</a></p>
+            {% endwith %}
+            <p><img class="image-stat" style="width:100%;" src="{{stat.activity.image.url}}"></p>
+            <p style="margin-left:10px;"><span class="ion ion-location" style="margin-right:5px;font-size:16px;"></span><span>{{stat.activity.address}}</span> - <span">{{stat.activity.city}}</span> - <span>{{stat.activity.province_unicode}}</span></p>
+            <p style="margin-left:10px;">
+            <span class="fa fa-calendar-check-o"></span><span class="day" style="margin-left:5px;">{{stat.activity.time_begin.day}}</span><span style="margin-left:5px;">tháng</span><span class="month" style="margin-left:5px;">{{stat.activity.time_begin.month}}</span><span style="margin-left:5px;">năm</span><span class="year" style="margin-left:5px;">{{stat.activity.time_begin.year}}</span><span style="margin-left:5px;">vào lúc</span><span class="hour" style="margin-left:5px;">{{stat.activity.time_begin.hour}}</span><span style="margin-left:5px;">giờ</span><span class="minute" style="margin-left:5px;">{{stat.activity.time_begin.minute}}</span><span style="margin-left:5px">phút</span></p>
+            {% with a=stat.activity.id|quantity %}
+            <p style="margin-left:10px;">
+            <span class="ion ion-person-stalker" style="margin-right:5px;"></span><span class="se-j">{{a.len}}</span><span style="margin-left:5px;">người tham gia</span>
+            {% endwith %}</p>
+        </div>
+    </div>
+    {% elif stat.status_type == 'create-event' %}
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.event.user.info.profile_pic %}
+            <img class="user-image" src="{{stat.event.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.event.user.id}}" class="info-name">{{stat.event.user.fullname}}</a></span>
+            </p>
+            <div>
+                {% include 'status/status_time.html' %}
+            </div>
+        </div>
+    </div>
+    <div class="stat-main">
+        <div class="stat-head">
+            <p class="head-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.event.user.id}}">{{stat.event.user.fullname}}</a></span>
+            <span>đã tạo sự kiện</span>
+            {% load activity_extras %}
+            {% with t=stat.event.head|addslash %}
+            <span><a href="{% url 'event:event' stat.event.id t %}">{{stat.event.head}}.</a></span>
+            <span>Nhấn vào sự kiện để đi tới thông tin chi tiết hoặc gửi lời mời tham gia.</span>
+            {% endwith %}
+            </p>
+        </div>
+        <div class="stat-info">
+            {% with t=stat.event.head|addslash %}
+            <p style="font-size:15px;"><a href="{% url 'event:event' stat.event.id t %}">{{stat.event.head}}</a></p>
+            {% endwith %}
+            <p><img class="image-stat" style="width:100%;" src="{{stat.event.image.url}}"></p>
+            <p style="margin-left:10px;"><span class="ion ion-location" style="margin-right:5px;font-size:16px;"></span><span>{{stat.event.address}}</span> - <span>{{stat.event.city_unicode}}</span> - <span>{{stat.event.province_unicode}}</span></p>
+            <p style="margin-left:10px;">
+            <span class="fa fa-calendar-check-o"></span><span class="day" style="margin-left:5px;">{{stat.event.time_begin.day}}</span><span style="margin-left:5px;">tháng</span><span class="month" style="margin-left:5px;">{{stat.event.time_begin.month}}</span><span style="margin-left:5px;">năm</span><span class="year" style="margin-left:5px;">{{stat.event.time_begin.year}}</span><span style="margin-left:5px;">vào lúc</span><span class="hour" style="margin-left:5px;">{{stat.event.time_begin.hour}}</span><span style="margin-left:5px;">giờ</span><span class="minute" style="margin-left:5px;">{{stat.event.time_begin.minute}}</span><span style="margin-left:5px">phút</span></p>
+            {% with a=stat.event.id|quantity %}
+            <p style="margin-left:10px;">
+            <span class="ion ion-person-stalker" style="margin-right:5px;"></span><span class="se-j">{{a.len}}</span><span style="margin-left:5px;">người tham gia</span>
+            {% endwith %}</p>
+        </div>
+    </div>
+    {% elif stat.status_type == 'contest-post' %}
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.contestpost.contest.user.info.profile_pic %}
+            <img class="user-image" src="{{stat.contestpost.contest.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.contestpost.contest.user.id}}" class="info-name">{{stat.contestpost.contest.user.fullname}}</a></span>
+            {% load activity_extras %}
+            {% with z=stat.contestpost.contest.head|addslash %}
+            <span>đã đăng trong cuộc thi<span style="margin-left:5px;"><a href="{% url 'contest:contest' stat.contestpost.contest.id z %}">{{stat.contestpost.contest.head}}</a></span></span> 
+            {% endwith %}
+            </p>
+            <div>
+                {% include 'status/status_time.html' %}
+            </div>
+        </div>
+    </div>
+    <div class="stat-main">
+        <div class="stat-head">
+            <p class="des-p">{{stat.contestpost.text|linebreaksbr}}</p>
+            {% if stat.contestpost.image %}
+            <p class="image-p" style="margin:0;">
+            <img src="{{stat.contestpost.image.url}}" class="cont-image">
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    {% elif stat.status_type == 'create-trait' %}
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.trait.user_receive.info.profile_pic %}
+            <img class="user-image" src="{{stat.trait.user_receive.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.trait.user_receive.id}}" class="info-name">{{stat.trait.user_receive.fullname}}</a></span>
+            <span>được tặng phẩm chất</span>
+            <span style="color:#3998db;">
+                {% with z=stat.trait.trait_type %}
+                {% if z == 'accessible' %}
+                Ôn hòa
+                {% elif z == 'fun' %}
+                Vui tính
+                {% elif z == 'kind' %}
+                Tốt bụng
+                {% elif z == 'active' %}
+                Năng động
+                {% elif z == 'appreciate' %}
+                Biết khen ngợi
+                {% elif z == 'benevolent' %}
+                Nhân từ
+                {% elif z == 'calm' %}
+                Điềm tĩnh
+                {% elif z == 'caring' %}
+                Quan tâm
+                {% elif z == 'charismatic' %}
+                Lôi cuốn
+                {% elif z == 'challenging' %}
+                Thích thử thách
+                {% elif z == 'compassionate' %}
+                Lòng trắc ẩn
+                {% elif z == 'conciliatory' %}
+                Hòa giải
+                {% elif z == 'curious' %}
+                Hiếu kỳ
+                {% elif z == 'daring' %}
+                Dũng cảm
+                {% elif z == 'decisive' %}
+                Quyết đoán
+                {% elif z == 'fair' %}
+                Công bằng
+                {% elif z == 'forgiving' %}
+                Khoan dung
+                {% elif z == 'humorous' %}
+                Hài hước
+                {% elif z == 'optimistic' %}
+                Lạc quan
+                {% elif z == 'painstaking' %}
+                Siêng năng
+                {% elif z == 'patient' %}
+                Kiên nhẫn
+                {% elif z == 'scrupulous' %}
+                Cẩn thận, chu đáo
+                {% elif z == 'sage' %}
+                Chính chắn
+                {% endif %}
+                {% endwith %}
+            </span>
+            </p>
+            <div>
+                {% include 'status/status_time_no_privacy.html' %}
+            </div>
+        </div>
+    </div>
+    <div class="stat-main">
+        <div class="stat-head">
+            <div class="stat-trait-div">
+                <div>
+                    <a href="{% url 'pro:profile' %}?id={{stat.trait.user_send.id}}" style="color:inherit">
+                    {% if stat.trait.user_send.info.profile_pic %}
+                    <img class="stat-trait-pic" src="{{stat.trait.user_send.info.profile_pic.url}}">
+                    {% else %}
+                    <img class="stat-trait-pic" src="/static/web/user.jpeg">
+                    {% endif %}
+                    <p style="font-size:13px;font-weight:600;display:inline;">{{stat.trait.user_send.fullname}}</p>
+                    </a>
+                </div>
+                <div style="margin-left:40px;margin-top:10px;">
+                    <i>{{stat.trait.text|linebreaksbr}}</i>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% elif stat.status_type == "change-profilepic" %}
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.user.info.profile_pic %}
+            <img class="user-image" src="{{stat.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.user.id}}" class="info-name">{{stat.user.fullname}}</a></span>
+            <span>đã cập nhật ảnh đại diện</span>
+            </p>
+            <div>
+            {% include 'status/status_time.html' %}
+            </div>
+        </div>
+    </div>
+    <div class="stat-main">
+        <p class="image-p" style="margin:0;">
+            <img class="cont-image" src="{{stat.user.info.profile_pic.url}}">
+        </p>
+    </div>
+    {% endif %}
+    <div class="stat-vote">
+        {% include 'status/status_vote.html' %}
+    </div>
+    <div class="stat-comment-post">
+        {% include 'status/status_comment_post.html' %}
+    </div>
+    <div class="stat-comment">
+        {% include 'status/status_comment.html' %}
+    </div>
+</div>
+{% endfor %}
+
+<script type="text/javascript" src="/static/event/rendertime.js"></script>
+<script type="text/javascript" src="/static/status/time_ymdhm.js"></script>

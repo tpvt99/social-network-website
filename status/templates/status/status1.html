@@ -1,0 +1,502 @@
+{% for stat in status %}
+{% if stat.status_type == 'act' %}
+<div class="stat-cont">
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.act.user.info.profile_pic %}
+            <img class="user-image" src="{{stat.act.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.act.user.id}}">{{stat.act.user.fullname}}</a></span>
+            {% with t=stat.act.act_actfriend_act.all %}
+            {% with a=t|length %}
+            {% if t %}
+                <span>- cùng với</span>
+                {% if a == 1 %}
+                    {% for i in t %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    {% endfor %}
+                {% elif a == 2 %}
+                    {% for i in t %}
+                    {% if forloop.counter == 1 %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    <span>và</span>
+                    {% else %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    {% endif %}
+                    {% endfor %}
+                {% elif a > 2 %}
+                    {% for i in t %}
+                    {% if forloop.counter == a|add:-1 %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    <span>và</span>
+                    {% else %}
+                        {% if forloop.counter == a %}
+                        <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                        {% else %}
+                        <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                        <span>,</span>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+            {% endwith %}
+            {% endwith %}
+            </p>
+            {% load web_extras %}
+            {% with z=stat.time_create|deltatime %}
+            <p class="ptime" data-time="{{z}}"></p>
+            {% endwith %}
+        </div>
+    </div>
+    <div class="stat-main">
+        <div class="stat-head">
+            <p class="head-p">
+            <span><a href="{% url 'act:act' stat.act.id %}">{{stat.act.head}}</a></span>
+            </p>
+            {% if stat.act.image %}
+            <p class="image-p" style="margin:0;">
+            <img src="{{stat.act.image.url}}" class="cont-image">
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="stat-vote">
+        {% load status_extras %}
+        {% with z=request.user|render_cool:stat %}
+        {% if z == True %}
+            <p style="margin:0;color:red" class="vote-p">
+        {% else %}
+            <p style="margin:0;" class="vote-p">
+        {% endif %}
+        {% endwith %}
+        <span class="vote-uni">&#129304;</span>
+        <span class="vote-count">{{stat.vote}}</span>
+        </p>
+    </div>
+    <div class="stat-opt">
+        <p style="margin:0">
+        {% with z=request.user|render_cool:stat %}
+        {% if z == True %}
+        <span class="opt-cool" data-stat="{{stat.id}}" style="color:red;">
+        {% else %}
+        <span class="opt-cool" data-stat="{{stat.id}}" style="color:#666;">
+        {% endif %}
+        {% endwith %}
+            <span>&#129304;</span>
+            <span>Cool</span>
+        </span>
+        </p>
+    </div>
+    <div class="stat-comment-post">
+        <div class="pa-com-img">
+        {% if request.user.info.profile_pic %}
+            <img class="com-img-us" src="{{request.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="com-img-us" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <form method="post" class="comment-form" autocomplete="off" >
+            {% csrf_token %}
+            <input type="hidden" name="status" value="{{stat.id}}">
+            <input type="text" name="comment" class="com-in" placeholder="Bình luận của bạn">
+        </form>
+    </div>
+    <div class="stat-comment">
+        {% with t=stat.status_statuscomment_status.all %}
+        {% for i in t %}
+            <div class="com-content">
+                <div style="float:left;padding:5px;width:40px;">
+                    {% if i.user.info.profile_pic %}
+                    <img class="com-con-img" src="{{i.user.info.profile_pic.url}}">
+                    {% else %}
+                    <img class="com-con-img" src="/static/web/user.jpeg">
+                    {% endif %}
+                </div>
+                <div style="float:left;padding:5px;">
+                    <p style="margin:0">
+                    <span style="color:#337ab7;font-size:15px;">{{i.user.fullname}}</span>
+                    <span>{{i.comment}}</span>
+                    </p>
+                    {% load web_extras %}
+                    {% with z=i.time_create|deltatime %}
+                    <p class="ptime" data-time="{{z}}" style="margin:0;"></p>
+                    {% endwith %}
+                </div>
+            </div>
+        {% endfor %}
+        {% endwith %}
+    </div>
+</div>
+{% elif stat.status_type == 'actpost' %}
+<div class="stat-cont">
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.actpost.user.info.profile_pic %}
+            <img class="user-image" src="{{stat.actpost.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.actpost.user.id}}">{{stat.actpost.user.fullname}}</a></span>
+            <span><span>- thuộc hoạt động</span><a href="{% url 'act:act' stat.actpost.act.id %}" style="margin-left:5px;">{{stat.actpost.act.head}}</a></span>
+            {% with t=stat.actpost.act_actposttagfriend_actpost.all %}
+            {% with a=t|length %}
+            {% if t %}
+                <span>- cùng với</span>
+                {% if a == 1 %}
+                    {% for i in t %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    {% endfor %}
+                {% elif a == 2 %}
+                    {% for i in t %}
+                    {% if forloop.counter == 1 %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    <span>và</span>
+                    {% else %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    {% endif %}
+                    {% endfor %}
+                {% elif a > 2 %}
+                    {% for i in t %}
+                    {% if forloop.counter == a|add:-1 %}
+                    <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                    <span>và</span>
+                    {% else %}
+                        {% if forloop.counter == a %}
+                        <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                        {% else %}
+                        <span><a href="{% url 'pro:profile' %}?id={{i.friend.id}}">{{i.friend.fullname}}</a></span>
+                        <span>,</span>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+            {% endwith %}
+            {% endwith %}
+            </p>
+            {% load web_extras %}
+            {% with z=stat.time_create|deltatime %}
+            <p class="ptime" data-time="{{z}}"></p>
+            {% endwith %}
+        </div>
+    </div>
+    <div class="stat-main">
+        <div class="stat-head">
+            <p class="des-p">{{stat.actpost.des|linebreaksbr}}</p>
+            {% if stat.actpost.image %}
+            <p class="image-p" style="margin:0;">
+            <img src="{{stat.actpost.image.url}}" class="cont-image">
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="stat-vote">
+        {% load status_extras %}
+        {% with z=request.user|render_cool:stat %}
+        {% if z == True %}
+            <p style="margin:0;color:red" class="vote-p">
+        {% else %}
+            <p style="margin:0;" class="vote-p">
+        {% endif %}
+        {% endwith %}
+        <span class="vote-uni">&#129304;</span>
+        <span class="vote-count">{{stat.vote}}</span>
+        </p>
+    </div>
+    <div class="stat-opt">
+        <p style="margin:0">
+        {% with z=request.user|render_cool:stat %}
+        {% if z == True %}
+        <span class="opt-cool" data-stat="{{stat.id}}" style="color:red;">
+        {% else %}
+        <span class="opt-cool" data-stat="{{stat.id}}" style="color:#666;">
+        {% endif %}
+        {% endwith %}
+            <span>&#129304;</span>
+            <span>Cool</span>
+        </span>
+        </p>
+    </div>
+    <div class="stat-comment-post">
+        <div class="pa-com-img">
+        {% if request.user.info.profile_pic %}
+            <img class="com-img-us" src="{{request.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="com-img-us" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <form method="post" class="comment-form" autocomplete="off" >
+            {% csrf_token %}
+            <input type="hidden" name="status" value="{{stat.id}}">
+            <input type="text" name="comment" class="com-in" placeholder="Bình luận của bạn">
+        </form>
+    </div>
+    <div class="stat-comment">
+        {% with t=stat.status_statuscomment_status.all %}
+        {% for i in t %}
+            <div class="com-content">
+                <div style="float:left;padding:5px;width:40px;">
+                    {% if i.user.info.profile_pic %}
+                    <img class="com-con-img" src="{{i.user.info.profile_pic.url}}">
+                    {% else %}
+                    <img class="com-con-img" src="/static/web/user.jpeg">
+                    {% endif %}
+                </div>
+                <div style="float:left;padding:5px;">
+                    <p style="margin:0">
+                    <span style="color:#337ab7;font-size:15px;">{{i.user.fullname}}</span>
+                    <span>{{i.comment}}</span>
+                    </p>
+                    {% load web_extras %}
+                    {% with z=i.time_create|deltatime %}
+                    <p class="ptime" data-time="{{z}}" style="margin:0;"></p>
+                    {% endwith %}
+                </div>
+            </div>
+        {% endfor %}
+        {% endwith %}
+    </div>
+</div>
+{% elif stat.status_type == 'create-activity' %}
+<div class="stat-cont">
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.activity.user.info.profile_pic %}
+            <img class="user-image" src="{{stat.activity.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.activity.user.id}}">{{stat.activity.user.fullname}}</a></span>
+            </p>
+            {% load web_extras %}
+            {% with z=stat.time_create|deltatime %}
+            <p class="ptime" data-time="{{z}}"></p>
+            {% endwith %}
+        </div>
+    </div>
+    <div class="stat-main">
+        <div class="stat-head">
+            <p class="head-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.activity.user.id}}">{{stat.activity.user.fullname}}</a></span>
+            <span>đã tạo hoạt động</span>
+            {% load activity_extras %}
+            {% with t=stat.activity.head|addslash %}
+            <span><a href="{% url 'activity:activity' stat.activity.id t %}">{{stat.activity.head}}.</a></span>
+            <span>Nhấn vào hoạt động để đi tới thông tin chi tiết hoạt động hoặc gửi lời mời tham gia.</span>
+            {% endwith %}
+            </p>
+        </div>
+        <div class="stat-info">
+            {% with t=stat.activity.head|addslash %}
+            <p style="font-size:15px;"><a href="{% url 'activity:activity' stat.activity.id t %}">{{stat.activity.head}}</a></p>
+            {% endwith %}
+            <p><img class="image-stat" style="width:100%;" src="{{stat.activity.image.url}}"></p>
+            <p style="margin-left:10px;"><span class="ion ion-location" style="margin-right:5px;font-size:16px;"></span><span>{{stat.activity.address}}</span> - <span">{{stat.activity.city}}</span> - <span>{{stat.activity.province_unicode}}</span></p>
+            <p style="margin-left:10px;">
+            <span class="fa fa-calendar-check-o"></span><span class="day" style="margin-left:5px;">{{stat.activity.time_begin.day}}</span><span style="margin-left:5px;">tháng</span><span class="month" style="margin-left:5px;">{{stat.activity.time_begin.month}}</span><span style="margin-left:5px;">năm</span><span class="year" style="margin-left:5px;">{{stat.activity.time_begin.year}}</span><span style="margin-left:5px;">vào lúc</span><span class="hour" style="margin-left:5px;">{{stat.activity.time_begin.hour}}</span><span style="margin-left:5px;">giờ</span><span class="minute" style="margin-left:5px;">{{stat.activity.time_begin.minute}}</span><span style="margin-left:5px">phút</span></p>
+            {% with a=stat.activity.id|quantity %}
+            <p style="margin-left:10px;">
+            <span class="ion ion-person-stalker" style="margin-right:5px;"></span><span class="se-j">{{a.len}}</span><span style="margin-left:5px;">người tham gia</span>
+            {% endwith %}</p>
+        </div>
+    </div>
+    <div class="stat-vote">
+        {% load status_extras %}
+        {% with z=request.user|render_cool:stat %}
+        {% if z == True %}
+            <p style="margin:0;color:red" class="vote-p">
+        {% else %}
+            <p style="margin:0;" class="vote-p">
+        {% endif %}
+        {% endwith %}
+        <span class="vote-uni">&#129304;</span>
+        <span class="vote-count">{{stat.vote}}</span>
+        </p>
+    </div>
+    <div class="stat-opt">
+        <p style="margin:0">
+        {% with z=request.user|render_cool:stat %}
+        {% if z == True %}
+        <span class="opt-cool" data-stat="{{stat.id}}" style="color:red;">
+        {% else %}
+        <span class="opt-cool" data-stat="{{stat.id}}" style="color:#666;">
+        {% endif %}
+        {% endwith %}
+            <span>&#129304;</span>
+            <span>Cool</span>
+        </span>
+        </p>
+    </div>
+    <div class="stat-comment-post">
+        <div class="pa-com-img">
+            {% if request.user.info.profile_pic %}
+            <img class="com-img-us" src="{{request.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="com-img-us" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <form method="post" class="comment-form" autocomplete="off" >
+            {% csrf_token %}
+            <input type="hidden" name="status" value="{{stat.id}}">
+            <input type="text" name="comment" class="com-in" placeholder="Bình luận của bạn">
+        </form>
+    </div>
+    <div class="stat-comment">
+        {% with t=stat.status_statuscomment_status.all %}
+        {% for i in t %}
+            <div class="com-content">
+                <div style="float:left;padding:5px;width:40px;">
+                    {% if i.user.info.profile_pic %}
+                    <img class="com-con-img" src="{{i.user.info.profile_pic.url}}">
+                    {% else %}
+                    <img class="com-con-img" src="/static/web/user.jpeg">
+                    {% endif %}
+                </div>
+                <div style="float:left;padding:5px;">
+                    <p style="margin:0">
+                    <span style="color:#337ab7;font-size:15px;">{{i.user.fullname}}</span>
+                    <span>{{i.comment}}</span>
+                    </p>
+                    {% load web_extras %}
+                    {% with z=i.time_create|deltatime %}
+                    <p class="ptime" data-time="{{z}}" style="margin:0;"></p>
+                    {% endwith %}
+                </div>
+            </div>
+        {% endfor %}
+        {% endwith %}
+    </div>
+</div>
+{% elif stat.status_type == 'create-event' %}
+<div class="stat-cont">
+    <div class="stat-user">
+        <div class="s-u-img">
+            {% if stat.event.user.info.profile_pic %}
+            <img class="user-image" src="{{stat.event.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="user-image" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <div class="s-u-info">
+            <p class="info-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.event.user.id}}">{{stat.event.user.fullname}}</a></span>
+            </p>
+            {% load web_extras %}
+            {% with z=stat.time_create|deltatime %}
+            <p class="ptime" data-time="{{z}}"></p>
+            {% endwith %}
+        </div>
+    </div>
+    <div class="stat-main">
+        <div class="stat-head">
+            <p class="head-p">
+            <span><a href="{% url 'pro:profile' %}?id={{stat.event.user.id}}">{{stat.event.user.fullname}}</a></span>
+            <span>đã tạo sự kiện</span>
+            {% load activity_extras %}
+            {% with t=stat.event.head|addslash %}
+            <span><a href="{% url 'event:event' stat.event.id t %}">{{stat.event.head}}.</a></span>
+            <span>Nhấn vào sự kiện để đi tới thông tin chi tiết hoặc gửi lời mời tham gia.</span>
+            {% endwith %}
+            </p>
+        </div>
+        <div class="stat-info">
+            {% with t=stat.event.head|addslash %}
+            <p style="font-size:15px;"><a href="{% url 'event:event' stat.event.id t %}">{{stat.event.head}}</a></p>
+            {% endwith %}
+            <p><img class="image-stat" style="width:100%;" src="{{stat.event.image.url}}"></p>
+            <p style="margin-left:10px;"><span class="ion ion-location" style="margin-right:5px;font-size:16px;"></span><span>{{stat.event.address}}</span> - <span>{{stat.event.city_unicode}}</span> - <span>{{stat.event.province_unicode}}</span></p>
+            <p style="margin-left:10px;">
+            <span class="fa fa-calendar-check-o"></span><span class="day" style="margin-left:5px;">{{stat.event.time_begin.day}}</span><span style="margin-left:5px;">tháng</span><span class="month" style="margin-left:5px;">{{stat.event.time_begin.month}}</span><span style="margin-left:5px;">năm</span><span class="year" style="margin-left:5px;">{{stat.event.time_begin.year}}</span><span style="margin-left:5px;">vào lúc</span><span class="hour" style="margin-left:5px;">{{stat.event.time_begin.hour}}</span><span style="margin-left:5px;">giờ</span><span class="minute" style="margin-left:5px;">{{stat.event.time_begin.minute}}</span><span style="margin-left:5px">phút</span></p>
+            {% with a=stat.event.id|quantity %}
+            <p style="margin-left:10px;">
+            <span class="ion ion-person-stalker" style="margin-right:5px;"></span><span class="se-j">{{a.len}}</span><span style="margin-left:5px;">người tham gia</span>
+            {% endwith %}</p>
+        </div>
+    </div>
+    <div class="stat-vote">
+        {% load status_extras %}
+        {% with z=request.user|render_cool:stat %}
+        {% if z == True %}
+            <p style="margin:0;color:red" class="vote-p">
+        {% else %}
+            <p style="margin:0;" class="vote-p">
+        {% endif %}
+        {% endwith %}
+        <span class="vote-uni">&#129304;</span>
+        <span class="vote-count">{{stat.vote}}</span>
+        </p>
+    </div>
+    <div class="stat-opt">
+        <p style="margin:0">
+        {% with z=request.user|render_cool:stat %}
+        {% if z == True %}
+        <span class="opt-cool" data-stat="{{stat.id}}" style="color:red;">
+        {% else %}
+        <span class="opt-cool" data-stat="{{stat.id}}" style="color:#666;">
+        {% endif %}
+        {% endwith %}
+            <span>&#129304;</span>
+            <span>Cool</span>
+        </span>
+        </p>
+    </div>
+    <div class="stat-comment-post">
+        <div class="pa-com-img">
+            {% if request.user.info.profile_pic %}
+            <img class="com-img-us" src="{{request.user.info.profile_pic.url}}">
+            {% else %}
+            <img class="com-img-us" src="/static/web/user.jpeg">
+            {% endif %}
+        </div>
+        <form method="post" class="comment-form" autocomplete="off" >
+            {% csrf_token %}
+            <input type="hidden" name="status" value="{{stat.id}}">
+            <input type="text" name="comment" class="com-in" placeholder="Bình luận của bạn">
+        </form>
+    </div>
+    <div class="stat-comment">
+        {% with t=stat.status_statuscomment_status.all %}
+        {% for i in t %}
+            <div class="com-content">
+                <div style="float:left;padding:5px;width:40px;">
+                    {% if i.user.info.profile_pic %}
+                    <img class="com-con-img" src="{{i.user.info.profile_pic.url}}">
+                    {% else %}
+                    <img class="com-con-img" src="/static/web/user.jpeg">
+                    {% endif %}
+                </div>
+                <div style="float:left;padding:5px;">
+                    <p style="margin:0">
+                    <span style="color:#337ab7;font-size:15px;">{{i.user.fullname}}</span>
+                    <span>{{i.comment}}</span>
+                    </p>
+                    {% load web_extras %}
+                    {% with z=i.time_create|deltatime %}
+                    <p class="ptime" data-time="{{z}}" style="margin:0;"></p>
+                    {% endwith %}
+                </div>
+            </div>
+        {% endfor %}
+        {% endwith %}
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+
+<link rel="stylesheet" type="text/css" href="/static/status/status.css">
+<script type="text/javascript" src="/static/event/rendertime.js"></script>
+<script type="text/javascript" src="/static/status/vote.js"></script>
+<script type="text/javascript" src="/static/status/comment.js"></script>
+<script type="text/javascript" src="/static/status/time_ymdhm.js"></script>

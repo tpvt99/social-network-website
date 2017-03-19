@@ -1,0 +1,91 @@
+{% if friend_request %}
+<p class="friend-nav-head">Lời mời kết bạn</p>
+{% for i in friend_request %}
+<div id="friend-div">
+    <div class="friend-div-image">
+        {% if i.inviter.info.profile_pic %}
+        <img class="friend-user-img" src="{{i.inviter.info.profile_pic.url}}">
+        {% else %}
+        <img class="friend-user-img" src="/static/web/user.jpeg">
+        {% endif %}
+    </div>
+    <div class="friend-div-info">
+        <p style="margin:0;font-size:12px;"><a href="{% url 'pro:profile' %}?id={{i.inviter.id}}">{{i.inviter.fullname}}</a></p>
+        {% csrf_token %}
+        <p style="margin:0;margin-top:3px;"><button type="button" class="btn btn-sm btn-primary ev-add" data-who="{{i.inviter.id}}" data-action="accept" autocomplete="off"><span>Chấp nhận</span></button>
+        <button type="button" class="btn btn-default btn-sm ev-add" data-who="{{i.inviter.id}}" data-action="refuse" autocomplete="off"><span>Hủy kết bạn</span></button></p>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<p class="friend-nav-head">Không có lời mời kết bạn</p>
+{% endif %}
+{% if friend_suggest %}
+<p class="friend-nav-head">Gợi ý kết bạn</p>
+{% for i in friend_suggest %}
+<div id="friend-div">
+    <div class="friend-div-image">
+        {% if i.info.profile_pic %}
+        <img class="friend-user-img" src="{{i.info.profile_pic.url}}">
+        {% else %}
+        <img class="friend-user-img" src="/static/web/user.jpeg">
+        {% endif %}
+    </div>
+    <div class="friend-div-info">
+        <p style="margin:0;font-size:12px;"><a href="{% url 'pro:profile' %}?id={{i.id}}">{{i.fullname}}</a></p>
+        {% csrf_token %}
+        {% load friend_extras %}
+        {% with a=request.user|friend:i %}
+        {% if a == 'connect' %}
+        {% csrf_token %}
+        <p><button type="button" class="ev-add btn btn-primary btn-sm" data-who="{{i.id}}" data-action="connect" autocomplete="off"><span class="ion ion-person-add"></span><span style="margin-left:5px;">Kết bạn</span></button></p>
+        {% elif a == 'decline' %}
+        <p><button type="button" class="ev-add btn btn-default btn-sm" data-who="{{i.id}}" data-action="decline" autocomplete="off"><span style="margin-left:5px;">Hủy kết bạn</span></button></p>
+        {% elif a == 'accept' %}
+        <p><button type="button" class="ev-add btn btn-danger btn-sm" data-who="{{i.id}}" data-action="refuse" autocomplete="off"><span style="margin-left:5px;">Hủy kết bạn</span></button>
+        <button type="button" class="ev-add btn btn-sm btn-default" data-who="{{i.id}}" data-action="accept" autocomplete="off"><span style="margin-left:5px;">Chấp nhận</span></button></p>
+        {% else %}
+        <p><button type="button" class="ev-add btn-success btn btn-sm " data-who="{{i.id}}" data-action="friend" disabled autocomplete="off"><span class="fa fa-check"></span><span style="margin-left:5px;">Đã là bạn bè</span></button></p>
+        {% endif %}
+        {% endwith %}
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<p class="friend-nav-head">Không có lời mời kết bạn</p>
+{% endif %}
+<style>
+#friend-div {
+    overflow : auto;
+    width : 100%;
+}
+.friend-div-image {
+    width : 60px;
+    height : 60px;
+    padding : 5px;
+    float : left;
+}
+.friend-user-img {
+    width : 50px;
+    height : 50px;
+}
+.friend-div-info {
+    float : left;
+    width : calc(100%-60px);
+    width : calc(100% - 60px);
+    width : -webkit-calc(100% - 60px);
+    width : -moz-calc(100% - 60px);
+    padding : 5px;
+}
+.friend-nav-head {
+    color : #666;
+    padding : 5px 10px;
+    margin : 0;
+}
+.ev-add {
+    padding : 2px;
+    margin : 0px;
+    line-height : 1.2;
+}
+</style>
+<script type="text/javascript" src="/static/search/friend_nav.js"></script>

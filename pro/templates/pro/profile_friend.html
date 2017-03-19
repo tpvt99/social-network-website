@@ -1,0 +1,59 @@
+<p class="head-fr"><span class="ion ion-person-stalker"></span> Bạn bè</p>
+{% for friend in friends %}
+<div class="friend-div">
+    {% if friend.friend.info.profile_pic %}
+        <img src="{{friend.friend.info.profile_pic.url}}" class="friend-img">
+    {% else %}
+        <img src="/static/web/user.jpeg" class="friend-img">
+    {% endif %}
+    <div class="friend-name">
+        <p class="name-p"><a href="{% url 'pro:profile' %}?id={{friend.friend.id}}">{{friend.friend.fullname}}</a></p>
+        {% load pro_extras %}
+        {% with z=request.user|render_friend_button:friend.friend %}
+            {% if z == 'friend' %}
+            <p><button type="button" class="btn btn-sm btn-default" data-send="false" disabled>Bạn bè</button></p>
+            {% elif z == 'stranger' %}
+            <p><button type="button" class="btn btn-sm btn-primary" data-send="true" data-who=="{{friend.friend.id}}" data-action="makefriend">Kết bạn</button></p>
+            {% elif z == 'decline' %}
+            <p><button type="button" class="btn btn-danger btn-sm" data-send="true" data-who="{{friend.friend.id}}" data-action="decline">Hủy kết bạn</button></p>
+            <p>
+            <button type="button" class="btn btn-sm btn-default" data-send="true" data-who="{{Friend.friend.id}}" data-action="refuse">Từ chối kết bạn</button>
+            <button type="button" class="btn btn-sm btn-success" data-send="true" data-who="{{Friend.friend.id}}" data-action="accept">Chấp nhận kết bạn</button></p>
+            {% endif %}
+        {% endwith %}
+    </div>
+</div>
+{% endfor %}
+<style>
+.head-fr {
+    background-color : #aaa;
+    color : #fff;
+    padding : 5px 10px;
+    font-size : 16px;
+    text-align : center;
+}
+.friend-div {
+    overflow : auto;
+    width : 100%;
+    padding : 10px;
+    border : 1px solid #eee;
+    margin : 0 auto;
+    margin-bottom : 20px;
+}
+.friend-img {
+    float : left;
+    width : 150px;
+    height : 150px;
+    padding : 10px;
+}
+.friend-name {
+    float : left;
+    width : 230px;
+    vertical-align : middle;
+}
+.name-p {
+    padding : 10px;
+    font-size : 16px;
+    font-weight : 600;
+}
+</style>

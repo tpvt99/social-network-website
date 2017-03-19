@@ -1,0 +1,13 @@
+<p style="margin:0">
+{% load status_extras %}
+{% with z=request.user|render_cool:stat %}
+{% if z == True %}
+<span class="opt-cool" data-stat="{{stat.id}}" style="color:red;">
+{% else %}
+<span class="opt-cool" data-stat="{{stat.id}}" style="color:#666;">
+{% endif %}
+{% endwith %}
+    <span>&#129304;</span>
+    <span>Cool</span>
+</span>
+</p>

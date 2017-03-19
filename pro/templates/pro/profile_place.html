@@ -1,0 +1,187 @@
+<div class="info-place">
+    <div class="place-head">
+        <p class="place-headp">Nơi ở</p>
+    </div>
+    <div class="current-place">
+        <p class="current-ph">Nơi ở hiện tại</p>
+        {% load pro_extras %}
+        {% with z=owner_user.user_liveplace_user.all|first %}
+        {% with a=request.user|render_friend_button:owner_user %}
+        {% if z %}
+            {% if z.privacy == 'public' %}
+                <p class="current-cont">
+                <span class="fa fa-map-marker"></span>
+                <span>Đang ở</span>
+                <span><a href="#">{{z.place}}</a></span>
+                </p>
+            {% elif z.privacy == 'private' %}
+                {% if request.user == owner_user %}
+                    <p class="current-cont">
+                    <span class="fa fa-map-marker"></span>
+                    <span>Đang ở</span>
+                    <span><a href="#">{{z.place}}</a></span>
+                    </p>
+                {% endif %}
+            {% elif z.privacy == 'friend' %}
+                {% if request.user == owner_user or a == 'friend' %}
+                    <p class="current-cont">
+                    <span class="fa fa-map-marker"></span>
+                    <span>Đang ở</span>
+                    <span><a href="#">{{z.place}}</a></span>
+                    </p>
+                {% endif %}
+            {% endif %}
+            {% if request.user == owner_user %}
+                <p class="edit-live">Chỉnh sửa</p>
+            {% endif %}
+        {% else %}
+            {% if request.user == owner_user %}
+                <p class="add-live">Thêm nơi ở</p>
+            {% endif %}
+        {% endif %}
+        {% endwith %}
+        {% endwith %}
+    </div>
+
+    <div class="born-place">
+        <p class="current-ph">Quê quán</p>
+        {% load pro_extras %}
+        {% with z=owner_user.user_bornplace_user.all|first %}
+        {% with a=request.user|render_friend_button:owner_user %}
+        {% if z %}
+            {% if z.privacy == 'public' %}
+                <p class="born-cont">
+                <span class="fa fa-home"></span>
+                <span>Sinh tại</span>
+                <span><a href="#">{{z.place}}</a></span>
+                </p>
+            {% elif z.privacy == 'private' %}
+                {% if request.user == owner_user %}
+                    <p class="born-cont">
+                    <span class="fa fa-home"></span>
+                    <span>Sinh tại</span>
+                    <span><a href="#">{{z.place}}</a></span>
+                    </p>
+                {% endif %}
+            {% elif z.privacy == 'friend' %}
+                {% if request.user == owner_user or a == 'friend' %}
+                    <p class="born-cont">
+                    <span class="fa fa-home"></span>
+                    <span>Sinh tại</span>
+                    <span><a href="#">{{z.place}}</a></span>
+                    </p>
+                {% endif %}
+            {% endif %}
+                {% if request.user == owner_user %}
+                    <p class="edit-born">Chỉnh sửa</p>
+                {% endif %}
+        {% else %}
+            {% if request.user == owner_user %}
+                <p class="add-born">Thêm nơi sinh</p>
+            {% endif %}
+        {% endif %}
+        {% endwith %}
+        {% endwith %}
+    </div>
+</div>
+<style>
+.info-place{
+    margin-top : 30px;
+    width : 800px;
+    background-color : #fff;
+    margin-left : 50px;
+}
+.place-headp {
+    font-size : 16px;
+    padding : 20px;
+    text-align : center;
+    font-weight : 600;
+    border-bottom : 1px solid #ddd;
+}
+.place-main {
+    padding : 20px;
+}
+.place-content {
+    font-size : 16px;
+    margin-left : 20px;
+}
+.edu-content:hover {
+    text-decoration : underline;
+    cursor : pointer;
+}
+.current-place, .born-place {
+    padding : 20px;
+}
+.current-cont, .born-cont {
+    padding : 20px;
+    padding-bottom : 0px;
+}
+.current-ph {
+    margin-left : 20px;
+    color : #999;
+    font-size : 16px;
+    border-bottom : 1px solid #ddd;
+}
+.edit-live, .edit-born {
+    font-size : 13px;
+    color : #888;
+    cursor : pointer;
+    margin-left : 20px;
+}
+.edit-live:hover {
+    text-decoration : underline;
+}
+.edit-born:hover {
+    text-decoration : underline;
+}
+.add-live, .add-born{
+    margin-left : 30px;
+    cursor : pointer;
+    color : #337ab7;
+}
+.add-live:hover, .add-born:hover {
+    text-decoration : underline;
+}
+</style>
+<script>
+function BP() {
+    $('.modal').find('.modal-content').empty().append('<p style="padding:10px 20px;text-align:center;"><span class="fa fa-spinner fa-pulse fa-3x fa-fw"></span><p>');
+    $('.modal').modal({
+        keyborad : false,
+        show : true,
+    });
+    $.ajax({
+        method:'GET',
+        url:'/profile/place/born/',
+        success:function(data) {
+            $('.modal').find('.modal-content').empty().append(data);
+        }
+    });
+}
+function LP() {
+    $('.modal').find('.modal-content').empty().append('<p style="padding:10px 20px;text-align:center;"><span class="fa fa-spinner fa-pulse fa-3x fa-fw"></span><p>');
+    $('.modal').modal({
+        keyborad : false,
+        show : true,
+    });
+    $.ajax({
+        method:'GET',
+        url:'/profile/place/live/',
+        success:function(data) {
+            $('.modal').find('.modal-content').empty().append(data);
+        }
+    });
+}
+$('.add-live').on('click', function() {
+    LP();
+});
+$('.edit-live').on('click', function() {
+    LP();
+});
+$('.add-born').on('click', function() {
+    BP();
+});
+$('.edit-born').on('click', function() {
+    BP();
+});
+</script>

@@ -1,0 +1,24 @@
+{% load status_extras %}
+{% with z=request.user|render_cool:stat y=stat.user.friend_friend_user.all|length|mul:0.1 %}
+{% if z == True %}
+<p style="color:#337ab7;" class="vote_pp">
+<span class="vote-p vote-p-co" data-stat="{{stat.id}}" data-toggle="tooltip" title="Bài này sẽ đạt tuyệt 100% nếu có hơn {{y}} người ấn nút này">
+{% else %}
+<p class="vote_pp">
+<span class="vote-p" data-stat="{{stat.id}}" data-toggle="tooltip" title="Bài này sẽ đạt tuyệt 100% nếu có hơn {{y}} người ấn nút này">
+{% endif %}
+    <span style="margin-left:3px;font-size:12px;" class="vote-uni">Tuyệt</span>
+    {% with a=stat.id|render_cool_percentage %}
+    <span class="vote-count" style="font-size:12px;">{{a}}</span>
+    {% endwith %}
+    <span>%</span>
+    </span>
+    <span class="vote-who" data-toggle="tooltip">
+        {% if stat.vote != 0 %}
+            <span style="margin-left:5px;" class="vote-quan">{{stat.vote}}</span>
+        {% else %}
+            <span style="margin-left:5px;" class="vote-quan"></span>
+        {% endif %}
+    </span>
+</p>
+{% endwith %}

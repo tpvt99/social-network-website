@@ -1,0 +1,103 @@
+{% if work %}
+<form class="add-work-form" action="/profile/work/edit/" method="post">
+{% else %}
+<form class="add-work-form" action="/profile/work/add/" method="post">
+{% endif %}
+    {% csrf_token %}
+    {% if work %}
+    <input type="hidden" name="work" value="{{work.id}}">
+    <input type="text" autocomplete="off" placeholder="Tên công ty" name="company" class="com-in" value="{{work.company}}">
+    <input type="text" autocomplete="off" placeholder="Vị trí/Chức vụ" name="position" class="pos-in" value="{{work.position}}">
+    {% else %}
+    <input type="text" autocomplete="off" placeholder="Tên công ty" name="company" class="com-in">
+    <input type="text" autocomplete="off" placeholder="Vị trí/Chức vụ" name="position" class="pos-in">
+    {% endif %}
+    <p>
+    <span class="pri-span">Quyền riêng tư</span>
+    <select name="privacy">
+    {% if work %}
+        {% if work.privacy == 'private' %}
+        <option value="private" selected>Riêng tư</option>
+        <option value="public">Công khai</option>
+        <option value="friend">Bạn bè</option>
+        {% elif work.privacy == 'public' %}
+        <option value="private">Riêng tư</option>
+        <option value="public" selected>Công khai</option>
+        <option value="friend">Bạn bè</option>
+        {% elif work.privacy == 'friend' %}
+        <option value="private">Riêng tư</option>
+        <option value="public">Công khai</option>
+        <option value="friend" selected>Bạn bè</option>
+        {% endif %}
+    {% else %}
+        <option value="private">Riêng tư</option>
+        <option value="public">Công khai</option>
+        <option value="friend">Bạn bè</option>
+    {% endif %}
+    </select></p>
+    <p>
+    <span class="time-span">Thời gian:</span>
+    <span>từ</span>
+    <select name="begin_year">
+    </select>
+    <span>đến</span>
+    <select name="end_year">
+    </select>
+    </p>
+    <p>
+    {% if work %}
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+    {% else %}
+    <button type="submit" class="btn btn-primary">Thêm công việc</button>
+    {% endif %}
+    <button type="submit" style="width:130px;" class="btn btn-default" data-dismiss="modal">Hủy</button>
+</form>
+<style>
+.com-in, .pos-in {
+    padding : 5px 10px;
+    background-color : #fff;
+    border-radius : 3px;
+    border : 1px solid #ccc;
+    width : 50%;
+    display : block;
+    margin-bottom : 10px;
+}
+.pri-span,.time-span {
+    font-size : 14px;
+    padding : 5px;
+}
+.add-work-form {
+    padding : 10px 20px;
+}
+select[name="privacy"] {
+    padding : 3px 6px;
+    border : 1px solid #aaa;
+    border-radius : 5px;
+    background-color : #fff;
+}
+select[name="begin_year"], select[name="end_year"] {
+    padding : 3px 6px;
+    border : 1px solid #aaa;
+    border-radius : 5px;
+    background-color : #fff;
+}
+</style>
+<script>
+(function() {
+    var year = parseInt(new Date().getFullYear());
+    var t = $('select[name="begin_year"]');
+    var z = $('select[name="end_year"]');
+    for(var i = 1970;i<=year;i++) {
+        t.append(['<option value="',i,'">',i,'</option>'].join(''));
+    }
+    z.append(['<option value="',year,'">',year,'</option>'].join(''));
+    t.on('change', function() {
+        var a = $(this).val();
+        z.empty();
+        for(var i = a;i<=year;i++) {
+            z.append(['<option value="',i,'">',i,'</option>'].join(''));
+        }
+
+    });
+})();
+</script>

@@ -1,0 +1,93 @@
+.user-main {
+    width:90%;
+    background-color : #fff;
+    display : flex;
+    margin : 0 auto;
+    margin-bottom : 50px;
+}
+.user-main1 {
+    display : inline-block;
+    width : 200px;
+    padding : 8px;
+}
+.user-main2 {
+    display : inline-block;
+    padding : 10px;
+    width : calc(100% - 200px);
+    width : -webkit-calc(100% - 200px);
+    width : -moz-calc(100% - 200px);
+}
+.profile-img {
+    width : 182px;
+    height : 182px;
+    border-radius : 5px;
+    border : 2px solid #ddd;
+}
+.user-name {
+    font-weight : 600;
+    font-size : 26px;
+    line-height : 1.25;
+}
+.profile-head,.profile-bio {
+    font-size : 18px;
+    color : #333;
+    word-break : bread-word;
+    word-break : keep-all;
+}
+.head-edit,.bio-edit, .name-edit {
+    margin-left : 10px;
+    color : #888;
+    text-decoration : none;
+    font-size : 14px;
+    display : none;
+    font-weight : normal;
+}
+.image-back {
+    position: relative;
+    background-color : #444;
+    height : 30px;
+    top : -30px;
+    width : 178px;
+    margin-left:2px;
+}
+.image-edit {
+    width : 180px;
+    position : absolute;
+    color : #fff;
+    bottom : 20px;
+    left : 0px;
+    top : 50%;
+    margin-top : -10px;
+    text-align:center;
+}
+.image-edit:hover {
+    cursor : pointer;
+}
+.head-edit:hover {
+    text-decoration : underline;
+    cursor : pointer;
+}
+.name-edit:hover {
+    text-decoration : underline;
+    cursor : pointer;
+}
+.bio-edit:hover {
+    text-decoration : underline;
+    cursor : pointer;
+}
+.profile-nohead,.profile-nobio {
+    font-size : 16px;
+    color : #888;
+}
+.profile-nohead:hover {
+    cursor:pointer;
+    text-decoration:underline;
+}
+.profile-nobio:hover {
+    cursor:pointer;
+    text-decoration:underline;
+}
+.user-info {
+    width : 300px;
+    background-color : #fff;
+}

@@ -1,0 +1,12 @@
+<div class="pa-com-img">
+{% if request.user.info.profile_pic %}
+    <img class="com-img-us" src="{{request.user.info.profile_pic.url}}">
+    {% else %}
+    <img class="com-img-us" src="/static/web/user.jpeg">
+    {% endif %}
+</div>
+<form method="post" class="comment-form" autocomplete="off" >
+    {% csrf_token %}
+    <input type="hidden" name="status" value="{{stat.id}}">
+    <input type="text" name="comment" class="com-in" placeholder="Bình luận của bạn">
+</form>

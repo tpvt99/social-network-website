@@ -1,0 +1,46 @@
+{% extends 'frontpage/frontpage.html' %}
+
+{% block head2 %}
+{% endblock %}
+
+{% block form %}
+<p >Đăng nhập</p>
+<form method="post" action="{% url 'frontpage:login' %}" autocomplete="off">
+    {% csrf_token %}
+    <div id="mid1">
+        <input type="email" id="idloge" name='email' placeholder="Email" value="{{email}}">
+    </div>
+    <div id="mid2">
+        <input type="password" id="idlogp" name='password' placeholder="Mật khẩu" autocomplete="off">
+    </div>
+    <div id="error">
+        <p style="color:#a94442;">{{error}}</p>
+    </div>
+    <div class="dlogl">
+        <button class="btn btn-default" type="submit" id="idlogb">Đăng nhập</button>
+    </div>
+    <p style="text-align:right;margin-top:10px;"><a href="{% url 'frontpage:frontpage' %}">Đăng ký tài khoản</a></p>
+</form>
+<style>
+#mid1, #mid2 {
+    text-align : center;
+}
+#idloge, #idlogp {
+    padding : 5px;
+    width : 90%;
+    border : 1px solid #ccc;
+    border-radius : 5px;
+    margin-top : 10px;
+    margin-bottom : 10px;
+}
+#idlogb {
+    width : 100%;
+    background-color : rgba(103,97,191,0.9);
+    color : #fff;
+    margin : 0 auto;
+}
+.dlogl {
+    text-align : center;
+}
+</style>
+{% endblock %}

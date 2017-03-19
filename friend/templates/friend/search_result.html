@@ -1,0 +1,72 @@
+{% for who in users %}
+<div class="ev-who">
+    <div class="who-img">
+        {% if who.info.profile_pic %}
+        <img src="{{who.info.profile_pic.url}}" class="ev-img">
+        {% else %}
+        <img src="/static/web/user.jpeg" class="ev-img">
+        {% endif %}
+        {% csrf_token %}
+        {% load friend_extras %}
+        {% with a=request.user|friend:who %}
+        {% if a == 'connect' %}
+            <button type="button" class="ev-add btn btn-primary btn-sm" data-who="{{who.id}}" data-action="connect" autocomplete="off"><span class="ion ion-person-add"></span><span style="margin-left:5px;">Kết bạn</span></button>
+        {% elif a == 'decline' %}
+            <button type="button" class="ev-add btn btn-default btn-sm" data-who="{{who.id}}" data-action="decline" autocomplete="off"><span style="margin-left:5px;">Hủy kết bạn</span></button>
+        {% elif a == 'accept' %}
+            <button type="button" class="ev-add btn btn-danger btn-sm" data-who="{{who.id}}" data-action="refuse" autocomplete="off"><span style="margin-left:5px;">Hủy kết bạn</span></button>
+            <button type="button" class="ev-add btn btn-sm btn-default" data-who="{{who.id}}" data-action="accept" autocomplete="off"><span style="margin-left:5px;">Chấp nhận</span></button>
+        {% else %}
+            <button type="button" class="ev-add btn-success btn btn-sm " data-who="{{who.id}}" data-action="friend" disabled autocomplete="off"><span class="fa fa-check"></span><span style="margin-left:5px;">Đã là bạn bè</span></button>
+        {% endif %}
+        {% endwith %}
+    </div>
+    <div class="who-info">
+        <p class="info-name"><a href="{% url 'pro:profile' %}?id={{who.id}}">{{who.fullname}}</a></p>
+        {% load activities_extras %}
+        {% with t=who|total_activities %}
+        <p><span>Tham gia</span><span style="margin-left:5px;">{{t}}</span><span style="margin-left:5px;">hoạt động</span></p>
+        {% endwith %}
+        {% load events_extras %}
+        {% with t=who|total_events %}
+        <p><span>Tham gia</span><span style="margin-left:5px;">{{t}}</span><span style="margin-left:5px;">sự kiện</span></p>
+        {% endwith %}
+    </div>
+</div>
+{% endfor %}
+<style>
+.ev-who {
+    width : 500px;
+    background-color : #fff;
+    border : 1px solid #ddd;
+    border-radius : 5px;
+    overflow : auto;
+    margin-bottom : 20px;
+}
+.who-img {
+    padding : 10px;
+    float : left;
+    width : 170px;
+}
+.who-info {
+    float : left;
+    width : 320px;
+    padding : 10px;
+}
+.ev-img {
+    width : 150px;
+    height : 150px;
+    border-radius : 3px;
+    border : 1px solid #e1e1e1;
+}
+.info-name {
+    font-size : 16px;
+    font-color : #333;
+    font-weight : 600;
+}
+.ev-add {
+    margin-top : 10px;
+    width : 100%;
+    border-radius : 5px;
+}
+</style>

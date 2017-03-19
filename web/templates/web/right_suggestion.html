@@ -1,0 +1,47 @@
+<div class="right-sug">
+    {% load web_extras %}
+    {% with t=request.user|act_suggestion %}
+    <p style="color:#777;font-size:13px;">Hoạt động đề xuất</p>
+    <div class="right_act_sug">
+        {% with a=t.activity_type %}
+        {% if a == 'sport' %}
+        <p class="pright_head">Thể thao
+        {% elif a == 'esport' %}
+        <p class="pright_head">Esport
+        {% elif a == 'volunteer' %}
+        <p class="pright_head">Tình nguyện
+        {% elif a == 'clb' %}
+        <p class="pright_head">Hoạt động câu lạc bộ - đội nhóm</p>
+        {% elif a == 'entertainment' %}
+        <p class="pright_head">Vui chơi giải trí
+        {% elif a == 'sing' %}
+        <p class="pright_head">Ca hát
+        {% elif a == 'camp' %}
+        <p class="pright_head">Cắm trại
+        {% elif a == 'backpacking' %}
+        <p class="pright_head">Đi phượt
+        {% endif %}
+        {% endwith %}
+        </p>
+        <p class="pright_sug"><a style="color:inherit;" href="{% url 'activity:link' %}?id={{t.id}}">{{t.head}}</a></p>
+        <img src="{{t.image.url}}" style="width:100%;height:100px;">
+        <p style="color:#444;font-size:13px;overflow-x:hidden;width:100%;"><span class="ion ion-location" style="margin-right:5px;font-size:16px;"></span><span class="se-add">{{t.address}}</span> - <span class="se-ci">{{t.city}}</span> - <span class="se-pr">{{t.province_unicode}}</span></p>
+    </div>
+    {% endwith %}
+</div>
+<style>
+.right-sug {
+    width : 100%;
+}
+.right_act_sug {
+    border : 1px solid #eee;
+    border-radius : 3px;
+    padding : 3px;
+}
+.pright_sug {
+    color : #333;
+    font-weight : 600;
+    font-size : 13px;
+    margin : 0px;
+}
+</style>

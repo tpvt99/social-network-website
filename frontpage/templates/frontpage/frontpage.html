@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <meta lang="vi">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    {% load staticfiles %}
+    <link href="{% static 'frontpage/bootstrap.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'frontpage/jquery-3.1.1.min.js' %}" ></script>
+    <script src="{% static 'frontpage/bootstrap.min.js' %}"></script>
+    <link href="{% static 'web/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <title>Lifelead</title>
+</head>
+
+<body>
+    <div class="container-fluid" style="width:100%;padding:0;">
+        <div class="head">
+            <div class="head1">
+                <p class="head_p"><a href="{% url 'frontpage:frontpage' %}" style="color:#fff;">lifelead</a></p>
+            </div>
+            {% block head2 %}
+            <div class="head2">
+                <form method="post" action="{% url 'frontpage:login' %}">
+                    {% csrf_token %}
+                <input type="text" name="email" placeholder="Email" class="log_in">
+                <input type="password" name="password" placeholder="Mật khẩu" class="log_in">
+                <button type="submit" class="log_sub btn-success">Đăng nhập</button>
+                </form>
+            </div>
+            {% endblock %}
+        </div>
+        <div class="main">
+            <div id="form">
+                {% block form %}
+                <p class="p_reg">Đăng ký</p>
+                <form method="post" action="{% url 'frontpage:register' %}" autocomplete="off" id="register-form">
+                    {% csrf_token %}
+                    <p>{{total_error}}</p>
+                    <div id="div_regf" class="div_form">
+                        <input type="text" name="regfirst" id="idregff" placeholder="Họ" autocomplete="off" value="{{firstname}}" data-toggle="popover" data-content="Họ và tên đệm của bạn" data-placement="left">
+                        <input type="text" name="reglast" id="idregfl" placeholder="Tên" autocomplete="off" style="margin-left:12px;" value="{{lastname}}" data-toggle="popover" data-content="Tên của bạn">
+                        <div id="idregferr" style="margin-top:10px;color:#a94442;text-align:left;">{{name_error}}
+                        </div>
+                    </div>
+                    <div id="idv_rege" class="div_form">
+                        <input type="text" name="rege" id="idrege" placeholder="Email" autocomplete="off" value="{{email}}" data-toggle="popover" data-content="Email này sẽ được dùng khi bạn đăng nhập cũng như bảo mật cho tài khoản của bạn.">
+                        <div id="idregeerr" style="margin-top:10px;color:#a94442;text-align:left;">{{email_error}}
+                        </div>
+                    </div>
+                    <div id="div_regp" class="div_form">
+                        <input type="password" name="regpass" id="idregp" placeholder="Mật khẩu" data-toggle="popover" data-content="Mật khẩu tối thiểu 6 kí tự.">
+                        <div id="idregperr" style="margin-top:10px;color:#a94442;text-align:left;">{{password_error}}
+                        </div>
+                    </div>
+                    <div id="div_regprp" class="div_form">
+                        <input type="password" name="regrepass" id="idregrp" placeholder="Nhập lại mật khẩu">
+                        <div id="idregrperr" style="margin-top:10px;color:#a94442;text-align:left;">
+                        </div>
+                    </div>
+                    <div id="div_sex" class="div_form">
+                        <label class="sp_l">
+                            <input type="radio" name="sex" value="male" class="sp_i">
+                            <span class="sp">Nam</span></label>
+                        <label class="sp_l">
+                            <input type="radio" name="sex" value="female" class="sp_i">
+                            <span class="sp">Nữ</span></label>
+                    </div>
+                    <div id="div_but"> 
+                        <button type="submit" class="btn btn-default" id="idregb" >Đăng ký</button>
+                    </div>
+                </form>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+<style>
+.head {
+    background-color : #34495e;
+    color : #fff;
+    min-height : 60px;
+    padding : 10px;
+    overflow : auto;
+    padding-left : 200px;
+    padding-right : 100px;
+}
+.head1 {
+    position : relative;
+    float : left;
+    color : #fff;
+}
+.head2 {
+    position : relative;
+    float : right;
+    color : #111;
+    padding : 10px;
+}
+.head_p {
+    font-size : 30px;
+    font-weight : 600;
+}
+.head_p > a:hover {
+    text-decoration : none;
+}
+.forgot_p:hover {
+    text-decoration : underline;
+}
+.log_in {
+    padding : 3px 6px;
+    border: 1px solid #ccc;
+    border-radius : 3px;
+    width : 180px;
+}
+.log_sub {
+    border : 1px solid #4cae4c;
+    border-radius : 3px;
+    padding : 2px 4px;
+    color : #fff;
+}
+.main {
+    padding-top : 50px;
+}
+#form {
+    text-align : center;
+    margin : 0 auto;
+    width : 400px;
+    border : 1px solid #ccc;
+    border-radius : 5px;
+    padding : 20px;
+    margin-top : 30px;
+}
+body {
+    background-color : #fff;
+}
+textarea:hover, input:hover {
+    outline : none;
+}
+*:focus {
+    outline : none;
+}
+</style>
+
+<style>
+.p_reg {
+    font-size : 20px;
+    font-weight :600;
+}
+#idregff, #idregfl {
+    display : inline-block;
+    width : 42%;
+    padding : 5px 10px;
+    border: 1px solid #aaa;
+    border-radius : 3px;
+}
+#idregp, #idrege, #idregrp {
+    padding : 5px 10px;
+    border : 1px solid #aaa;
+    border-radius : 3px;
+    width : 90%;
+}
+#idregb {
+    background-color : #34495e;
+    color : #fff;
+    width : 100%;
+}
+.label {
+    font-weight : normal;
+    font-size : 14px;
+    color : #666;
+}
+.div_form {
+    padding-top : 10px;
+    padding-bottom : 10px;
+}
+.sp_i {
+    vertical-align : bottom;
+    width : 13px;
+    height : 13px;
+    padding : 0;
+    margin : 0;
+    position : relative;
+    top : -1px;
+    *overflow : hidden;
+}
+.sp_l {
+    display : inline-block;
+    margin-top : 5px;
+    padding-left : 15px;
+    text-indent : -15px;
+}
+.sp_l:last-of-type {
+    margin-left : 10px;
+}
+.sp {
+    padding-left : 5px;
+}
+</style>
+<script>
+$('#idregff').on('focusin', function() {
+    $(this).popover('show');
+});
+$('#idregff').on('focusout', function() {
+    $(this).popover('hide');
+    if($(this).val().trim() === '') {
+        $(this).css({'border-color':'red'});
+    } else {
+        $(this).css({'border-color':'#aaa'});
+    }
+});
+$('#idregfl').on('focusin', function() {
+    $(this).popover('show');
+});
+$('#idregfl').on('focusout', function() {
+    $(this).popover('hide');
+    if($(this).val().trim() === '') {
+        $(this).css({'border-color':'red'});
+    } else {
+        $(this).css({'border-color':'#aaa'});
+    }
+});
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+$('#idrege').on('focusin',function() {
+    $(this).popover('show');
+});
+$('#idrege').on('focusout',function() {
+    $(this).popover('hide');
+    if($(this).val().trim() === '') {
+        $(this).css({'border-color':'red'});
+    } 
+    else if($(this).val().trim() !== '' && validateEmail($(this).val()) === false) {
+        $(this).css({'border-color':'red'});
+        $('#idregeerr').html('Địa chỉ email không hợp lệ').show();
+    } else {
+        $(this).css({'border-color':'#aaa'});
+        $('#idregeerr').html('').hide();
+    }
+});
+$('#idregp').on('focusin', function() {
+    $(this).popover('show');
+});
+$('#idregp').on('focusout', function() {
+    $(this).popover('hide');
+    var t = $('#idregrp').val().trim();
+    if( $(this).val().trim() === '' || $(this).val().trim().length < 6) {
+        $(this).css({'border-color':'red'});
+        $('#idregperr').html('Mật khẩu nhỏ hơn 6 kí tự').show();
+    }
+    else if (t !== '' && t !== $(this).val().trim()) {
+        $(this).css({'border-color':'red'});
+        $('#idregrperr').html('Mật khẩu không trùng khớp').show();
+    } else {
+        $(this).css({'border-color':'#aaa'});
+        $('#idregrp').css({'border-color':'#aaa'});
+        $('#idregrperr').html('').hide();
+        $('#idregperr').html('').hide();
+    }
+});
+$('#idregrp').on('focusout', function() {
+    var t = $('#idregp').val().trim();
+    if( $(this).val().trim() === '') {
+        $(this).css({'border-color':'red'});
+    }
+    else if (t !== $(this).val().trim()) {
+        $(this).css({'border-color':'red'});
+        $('#idregrperr').html('Mật khẩu không trùng khớp').show();
+    } else if ( t.length < 6) {
+        $(this).css({'border-color':'#aaa'});
+        $('#idregrperr').html('').hide();
+    } else {
+        $(this).css({'border-color':'#aaa'});
+        $('#idregp').css({'border-color':'#aaa'});
+        $('#idregrperr').html('').hide();
+    }
+});
+$('#register-form').on('submit', function() {
+    var submit = true;
+    if($('#idregff').val().trim() === '') {
+        $('#idregff').css({'border-color':'red'});
+        submit = false;
+    } else {
+        $('#idregff').css({'border-color':'#aaa'});
+    }
+    if($('#idregfl').val().trim() === '') {
+        $('#idregfl').css({'border-color':'red'});
+        submit = false;
+    } else {
+        $('#idregfl').css({'border-color':'#aaa'});
+    }
+    if($('#idrege').val().trim() === '') {
+        $('#idrege').css({'border-color':'red'});
+        submit = false;
+    } else {
+        if (validateEmail($('#idrege').val()) === false) {
+            $('#idrege').css({'border-color':'red'});
+            $('#idregeerr').html('Địa chỉ email không hợp lệ').show();
+            submit = false;
+        } else {
+            $('#idrege').css({'border-color':'#aaa'});
+            $('#idregeerr').html('');
+        }
+    }
+    if($('#idregp').val().trim() === '') {
+        $('#idregp').css({'border-color':'red'});
+        submit = false;
+    } else { 
+        if($('#idregp').val().length < 6) {
+            $('#idregp').css({'border-color':'red'});
+            $('#idregperr').html('Mật khẩu tối thiểu 6 kí tự').show();
+            submit = false;
+        } else if($('#idregp').val() !== $('#idregrp').val()) {
+            $('#idregrp').css({'border-color':'red'});
+            $('#idregperr').html('Mật khẩu không trùng khớp').show();
+            submit = false;
+        } else {
+            $('#idregp').css({'border-color':'#aaa'});
+            $('#idregperr').html('');
+        }
+    }
+    if($('#idregrp').val().trim() === '') {
+        $('#idregrp').css({'border-color':'red'});
+        submit = false;
+    } else {
+        $('#idregrp').css({'border-color':'#aaa'});
+    }
+    if($('input[name="sex"]:checked').val() === undefined) {
+        $('.sp').css({'color':'red'});
+        submit = false;
+    } else {
+        $('.sp').css({'color':'#333'});
+    }
+    if (submit === false) return submit;
+});
+</script>
+</body>
+</html>

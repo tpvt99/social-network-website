@@ -1,0 +1,12 @@
+<link href="/static/web/right-mess.css" rel="stylesheet" type="text/css">
+<div class="right-mess-div">
+    {% with fr=request.user.friend_friend_user.all %}
+    {% for i in fr %}
+    {% if i.friend.info.profile_pic %}
+    <img class="le-mess-u-img" src="{{i.friend.info.profile_pic.url}}">
+    {% else %}
+    <img class="le-mess-u-img" src="/static/web/user.jpeg">
+    {% endif %}
+    {% endfor %}
+    {% endwith %}
+</div>

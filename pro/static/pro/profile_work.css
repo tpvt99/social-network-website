@@ -1,0 +1,52 @@
+.info-works {
+    width : 800px;
+    overflow : auto;
+    background-color : #fff;
+    margin-left : 50px;
+}
+.work-headp {
+    font-size : 16px;
+    padding : 20px;
+    text-align : center;
+    font-weight : 600;
+    border-bottom : 1px solid #ddd;
+}
+.work-main {
+    padding : 20px;
+}
+.add-work {
+    font-size : 15px;
+    cursor : pointer;
+    color : #337ab7;
+}
+.add-work:hover {
+    text-decoration : underline;
+}
+.work-content {
+    font-size : 16px;
+}
+.work-content:hover {
+    text-decoration : underline;
+    cursor : pointer;
+}
+.edit-work {
+    font-size : 13px;
+    color : #aaa;
+    cursor : pointer;
+}
+.edit-work:hover {
+    text-decoration : underline;
+}
+.a-sp {
+    color : #337ab7;
+    cursor : pointer;
+    margin-left : 3px;
+}
+.a-sp:hover {
+    text-decoration : underline;
+}
+.work-position {
+    color : #999;
+    font-size : 14px;
+    margin-left : 25px;
+}
