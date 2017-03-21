@@ -350,7 +350,7 @@ class Content(View):
             t = Friend.objects.filter(user = owner_user)
             for i in t:
                 if request.user == i.friend:
-                    status = Status.objects.filter(Q(user = owner_user), Q(privacy = 'public') | Q(privacy = 'friend'))[page*10:page*10+10]
+                    status = Status.objects.filter(Q(user = owner_user), Q(privacy = 'public') | Q(privacy = 'friend')).order_by('-time_create')[page*10:page*10+10]
                     return render(request, 'status/status.html' ,{'status':status})
-            status = Status.objects.filter(user = owner_user, privacy = 'public')[page*10:page*10+10]
+            status = Status.objects.filter(user = owner_user, privacy = 'public').order_by('-time_create')[page*10:page*10+10]
             return render(request, 'status/status.html', {'status':status})

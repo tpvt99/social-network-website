@@ -630,7 +630,12 @@
     </div>
     <div class="stat-main">
         <p class="image-p" style="margin:0;">
+        {% if stat.user.info.profile_pic %}
             <img class="cont-image" src="{{stat.user.info.profile_pic.url}}">
+        {% else %}
+            <img class="cont-image" src="/static/web/user.jpeg">
+        {% endif %}
+
         </p>
     </div>
     {% endif %}

@@ -20,4 +20,5 @@ urlpatterns = [
 
         url(r'^logout/$', Logout.as_view(), name='logout'),
 
+
         ]

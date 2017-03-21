@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'group.apps.GroupConfig',
     'trait.apps.TraitConfig',
     'message.apps.MessageConfig',
     'skill.apps.SkillConfig',

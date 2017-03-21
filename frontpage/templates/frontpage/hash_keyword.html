@@ -1,0 +1,17 @@
+{% extends 'frontpage/frontpage.html' %}
+
+{% block form %}
+<form method="post" action="/validate/">
+    {% csrf_token %}
+    <input type="text" class="hash-input" placeholder="Nhập mã xác minh gửi tới email của bạn" name="hash-key">
+    <button type="submit" style="margin-top:10px;">Xác minh</button>
+<p>{{error}}</p>
+</form>
+<style>
+.hash-input {
+    padding : 5px;
+    border : 1px solid #ccc;
+    width : 300px;
+}
+</style>
+{% endblock %}

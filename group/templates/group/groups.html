@@ -1,0 +1,71 @@
+{% extends 'web/standardpage.html' %}
+
+{% block searchpage %}
+{% endblock %}
+
+{% block no_global-main %}
+<div class="create-group">
+    <a class="btn btn-success" style="height:30px;" href="/group/groups?key=create">Tạo nhóm</a>
+</div>
+{% if request.GET.key == 'create' %}
+<div class="group-create">
+    <form class="form-create" method="post" enctype="multipart/form-data" action="/group/create/">
+        {% csrf_token %}
+        <h5 class="h-form">Tạo nhóm</h5>
+        <p style="margin-left:10px;">
+        <label>Tên nhóm</label><input type="text" name="group-name" class="group-name" placeholder="Tên nhóm"/>
+        </p>
+        <p style="margin-left:10px;">
+        <label>Quyền riêng tư</label>
+        <select name="privacy">
+            <option value="public">Công khai</option>
+            <option value="private">Riêng tư</option>
+        </select>
+        </p>
+        <p style="margin-left:10px;"><button type="submit" class="btn btn-primary">Tạo nhóm</button></p>
+    </form>
+</div>
+{% endif %}
+<style>
+.create-group {
+    background-color : #fff;
+    margin : 0 auto;
+    display : -webkit-flex;
+    display : flex;
+    justify-content : center;
+    align-content: center;
+    margin-top : 100px;
+    width : 500px;
+    min-height : 50px;
+    border : 1px solid #ccc;
+}
+.group-create {
+    background-color : #fff;
+    border : 1px solid #ccc;
+    border-radius : 5px;
+    width : 500px;
+    margin : 0 auto;
+    margin-top : 20px;
+    padding : 10px;
+}
+.form-create {
+}
+.h-form {
+    text-align : center;
+    color : #e74c3c;
+}
+select[name="privacy"] {
+    background-color : #fff;
+    border : 1px solid #ccc;
+    border-radius : 5px;
+    padding :3px 6px;
+}
+.group-name {
+    width : 70%;
+    padding : 4px 6px;
+    margin : 10px;
+    border : 1px solid #e67e22;
+    border-radius : 3px;
+}
+</style>
+{% endblock %}

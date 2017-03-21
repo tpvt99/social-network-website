@@ -125,3 +125,8 @@ class Activity(models.Model):
 class Event(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name = "%(app_label)s_%(class)s_user")
     total_event = models.IntegerField(default = 0)
+
+class EmailValidation(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name = "%(app_label)s_%(class)s_user")
+    hash_keyword = models.CharField(max_length = 50)
+    has_validate = models.BooleanField(default = False)
