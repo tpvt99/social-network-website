@@ -22,7 +22,7 @@ import re
 
 
 class FrontPage(View):
-    template = 'frontpage/frontpage.html'
+    template = 'frontpage/frontpage_new.html'
     def get(self, request):
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse('web:webpage'))
@@ -37,6 +37,7 @@ class RegForm(View):
     template = 'frontpage/regform.html'
     def get(self, request):
         return render(request, self.template)
+
 class Helper(View):
     def validateEmail(self, email):
         t = re.compile(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')
@@ -57,28 +58,24 @@ class Register(Helper):
         lastname = request.POST.get('reglast')
         fullname = firstname + ' ' + lastname
         password = request.POST.get('regpass')
-        repassword = request.POST.get('regrepass')
         email = request.POST.get('rege')
         sex = request.POST.get('sex')
         try:
             firstname = firstname.strip()
             lastname = lastname.strip()
             password = password.strip()
-            repassword = repassword.strip()
             email = email.strip()
         except:
-            return render(request, 'frontpage/frontpage.html',{'email':email,'firstname':firstname,'lastname':lastname,'total_error':'Có lỗi xảy ra. Vui lòng thử lại'})
+            return render(request, 'frontpage/frontpage_new.html',{'email':email,'firstname':firstname,'lastname':lastname,'total_error':'Có lỗi xảy ra. Vui lòng thử lại'})
         if len(password) < 6:
-            return render(request, 'frontpage/frontpage.html',{'email':email,'firstname':firstname,'lastname':lastname,'password_error':'Mật khẩu nhỏ hơn 6 kí tự'})
-        if password != repassword:
-            return render(request, 'frontpage/frontpage.html',{'email':email,'firstname':firstname,'lastname':lastname,'password_error':'Mật khẩu không trùng khớp'})
+            return render(request, 'frontpage/frontpage_new.html',{'email':email,'firstname':firstname,'lastname':lastname,'password_error':'Mật khẩu nhỏ hơn 6 kí tự'})
         if not self.validateEmail(email):
-            return render(request, 'frontpage/frontpage.html',{'email':email,'firstname':firstname,'lastname':lastname,'email_error':'Email đăng kí không hợp lệ'})
+            return render(request, 'frontpage/frontpage_new.html',{'email':email,'firstname':firstname,'lastname':lastname,'email_error':'Email đăng kí không hợp lệ'})
         if not self.validateName(firstname) or not self.validateName(lastname):
-            return render(request, 'frontpage/frontpage.html',{'email':email,'firstname':firstname,'lastname':lastname,'name_error':'Tên không hợp lệ'})
+            return render(request, 'frontpage/frontpage_new.html',{'email':email,'firstname':firstname,'lastname':lastname,'name_error':'Tên không hợp lệ'})
         try:
             MyUser.objects.get(email = email.strip())
-            return render(request, 'frontpage/frontpage.html',{'email':email,'email_error':'Email này đã được đăng ký'})
+            return render(request, 'frontpage/frontpage_new.html',{'email':email,'email_error':'Email này đã được đăng ký'})
         except MyUser.DoesNotExist:
             user = MyUser.objects.create_user(
                             email = email,

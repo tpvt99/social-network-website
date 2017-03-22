@@ -1,9 +1,7 @@
-{% extends 'frontpage/frontpage.html' %}
-
-{% block head2 %}
-{% endblock %}
+{% extends 'frontpage/frontpage_new.html' %}
 
 {% block form %}
+<div id="form">
 <p >Đăng nhập</p>
 <form method="post" action="{% url 'frontpage:login' %}" autocomplete="off">
     {% csrf_token %}
@@ -21,6 +19,7 @@
     </div>
     <p style="text-align:right;margin-top:10px;"><a href="{% url 'frontpage:frontpage' %}">Đăng ký tài khoản</a></p>
 </form>
+</div>
 <style>
 #mid1, #mid2 {
     text-align : center;
@@ -41,6 +40,15 @@
 }
 .dlogl {
     text-align : center;
+}
+#form {
+    text-align : center;
+    margin : 0 auto;
+    width : 400px;
+    border : 1px solid #ccc;
+    border-radius : 5px;
+    padding : 20px;
+    margin-top : 30px;
 }
 </style>
 {% endblock %}

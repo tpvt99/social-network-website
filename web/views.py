@@ -62,3 +62,7 @@ class ErrorPage(View):
 class ContactPage(View):
     def get(self, request):
         return render(request, 'web/contactpage.html')
+
+class WebPageNew(View):
+    def get(self, request):
+        return render(request, 'web/webpagenew.html')

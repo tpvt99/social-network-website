@@ -1,0 +1,13 @@
+* {
+    margin : 0;
+    padding : 0;
+    box-sizing : border-box;
+}
+html {
+    background-color : #fff;
+    color : #333;
+    font-family: "Open Sans",sans-serif;
+    font-weight : normal;
+    font-size : 14px;
+    text-rendering : optimizeLegibility;
+}

@@ -1,0 +1,69 @@
+{% extends 'web/standardpage.html' %}
+
+{% block searchpage %}
+{% endblock %}
+
+{% block webpage %}
+<div class="web-page">
+    <div id="nav-left">
+        {% include 'web/left_main.html' %}
+    </div>
+
+    <div id="nav-middle">
+        {% include 'web/middle.html' %}
+    </div>
+    <div id="nav-right">
+        {% include 'web/right.html' %}
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block right-mess %}
+<div class="right-absolute">
+    <div class="right-good">
+        {% include 'web/right-good.html' %}
+    </div>
+    <div class="right-mess">
+        {% include 'web/right-mess.html' %}
+    </div>
+</div>
+{% endblock %}
+
+
+{% block style %}
+<style>
+#nav-left {
+    float : left;
+    width : 250px;
+}
+#nav-middle {
+    float : left;
+    width : 550px;
+    margin-left : 20px;
+}
+#nav-right {
+    float : left;
+    width : 310px;
+    margin-left : 20px;
+    position : relative;
+}
+#nav-right-good {
+    float : left;
+    margin-left : 10px;
+    width : 70px;
+}
+.right-static {
+    position :fixed;
+    width : 180px;
+    top : 60px;
+    right : 5px;
+}
+</style>
+{% endblock %}

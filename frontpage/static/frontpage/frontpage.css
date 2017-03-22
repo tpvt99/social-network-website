@@ -1,0 +1,214 @@
+/* -----------------------  */
+/* BASIC SETUP */
+/* -----------------*/
+
+* {
+   margin : 0;
+    padding : 0;
+   box-sizing : border-box; 
+}
+html {
+    background-color : #fff;
+    color  :#333;
+    font-family : "Open Sans", "Arial" ,sans-serif;
+    font-weight : normal;
+    font-size : 14px;
+    text-rendering : optimizeLegibility;
+}
+.row {
+    min-width : 1200px;
+    margin : 0 auto;
+}
+
+/* -----------------------  */
+/* HEADING */
+/* -----------------*/
+
+
+header {
+    background-image : linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.4)), url(img/self-actualization_header.jpg);
+    height : 100vh;
+    background-size : cover;
+    background-position : center;
+    flex-flow : column nowrap;
+}
+.header-text {
+    align-self : flex-start;
+    margin-left : 50px;
+}
+.flex-grid {
+    display : -webkit-flex;
+    display : flex;
+}
+.flex-center {
+    align-items : center;
+    justify-content : center;
+}
+h1 {
+    margin : 0;
+    color : #fff;
+    font-size : 250%;
+    font-weight : normal;
+    text-transform : uppercase;
+    letter-spacing : 1px;
+    word-spacing : 3px;
+    margin-bottom : 20px;
+}
+.header-h2 {
+    font-style : italic;
+    text-align : center;
+    font-size : 150%;
+    word-spacing : 0px;
+    color : #f36;
+}
+nav.nav {
+    position : absolute;
+    top : 20px;
+}
+.nav-head {
+    color : #fff;
+}
+.nav-title {
+    width : auto;
+    float : left;
+    font-size : 220%;
+    font-weight : 600;
+}
+.nav-title a:link,
+.nav-title a:visited{
+    color : #fff;
+    text-decoration : none;
+}
+.main-nav {
+    float : right;
+}
+.text-input {
+    background-color : transparent;
+    border : 1px solid #fff;
+    border-radius : 5px;
+    padding : 8px 12px;
+    color : #fff;
+}
+.text-input::-webkit-input-placeholder {
+    color : #fff;
+}
+.text-input:-moz-placeholder {
+    color : #fff;
+    opacity : 1;
+}
+.text-input::-moz-placeholder {
+    color : #fff;
+    opacity : 1;
+}
+.text-input::-ms-input-placeholder {
+    color : #fff;
+}
+.email-input {
+    width : 200px;
+}
+.password-input {
+    width : 200px;
+    margin-left : 15px;
+}
+.but {
+    font-family : "Open Sans", sans-serif;
+    word-spacing : 1px;
+    padding : 8px 12px;
+    border-radius : 5px;
+    cursor : pointer;
+}
+.btn-submit {
+    background-color : #3889bd;
+    border : 1px solid #3889bd;
+    margin-left : 15px;
+    color : #fff;
+}
+.btn-submit:hover {
+    background-color : #2980b9;
+}
+.main-nav li {
+    display : inline-block;
+    margin : 0px 30px;
+}
+.main-nav li a:link,
+.main-nav li a:visited {
+    color : #fff;
+    text-decoration : none;
+    text-transform : uppercase;
+    font-size : 120%;
+    border-bottom : 2px solid transparent;
+    padding-bottom : 5px;
+    transition : border-bottom 0.3s;
+}
+.main-nav li a:hover,
+.main-nav li a:active{
+    border-bottom : 2px solid #e74c3c;
+}
+
+/* -----------------------  */
+/* BUTTON */
+/* -----------------*/
+
+.btn-register{
+    background-color : #34495e;
+    border : 1px solid #34495e;
+    color : #fff;
+}
+
+/* -----------------------  */
+/* REGISTER FORM*/
+/* -----------------*/
+.reg-form {
+    background-color : #1abc9c;
+    border : 1px solid #1abc9c;
+    border-radius : 10px;
+    margin-left : 30px;
+    padding : 20px;
+    text-align : center;
+    width : 400px;
+}
+h2 {
+    font-weight : normal;
+    color : #fff;
+    word-spacing : 3px;
+    margin : 10px 0px;
+}
+.div_form {
+    width : 80%;
+    margin : 30px auto;
+}
+.div_form input {
+    padding : 7px 10px;
+    border : 1px solid #1abc9c;
+    background-color : #fff;
+    border-radius : 5px;
+    width : 100%;
+}
+.div_form_1 {
+    justify-content : space-between;
+}
+.div_form_1 input {
+    display : inline-block;
+    width : 45%;
+}
+.sp_l {
+    display : inline-block;
+    margin-top : 5px;
+    padding-left : 15px;
+    text-indent : -15px;
+    max-width : 100%;
+    font-weight: 600;
+    margin : 0px 5px;
+}
+.sp_i {
+    padding : 0px;
+    vertical-align : bottom;
+    width : 13px;
+    height : 13px;
+    position : relative;
+    top : -1px;
+    width : auto !important;
+}
+.sp {
+    padding-left : 5px;
+}

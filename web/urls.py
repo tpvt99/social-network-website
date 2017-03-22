@@ -13,6 +13,8 @@ from .views import Content
 from .views import RenderParticipate
 from .views import ErrorPage, ContactPage
 
+from .views import WebPageNew
+
 app_name = 'web'
 
 urlpatterns = [
@@ -26,6 +28,9 @@ urlpatterns = [
         url(r'^renderpar/$', RenderParticipate.as_view() , name='ren_par'),
 
         url(r'^errorpage/$', ErrorPage.as_view(), name="error"),
+
         url(r'^contactpage/$', ContactPage.as_view(), name="contact"),
+
+        url(r'^homenew/$', WebPageNew.as_view(), name='webpagenew'),
 
         ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta lang="vi">
+    <meta http-equiv="X-UA-Compatibale" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximun-scale=1, user-scalable=yes">
+
+    <link href="/static/web/css/normalize.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/web/css/font.css" rel="stylesheet" type="text/css">
+    <link href="/static/frontpage/frontpage.css" rel="stylesheet" type="text/css">
+    <script src="/static/frontpage/jquery-3.1.1.min.js" ></script>
+    <title>Lifelead</title>
+</head>
+<body>
+    {% block form %}
+    <header class="flex-grid flex-center">
+        <nav class="nav">
+            <div class="row nav-head">
+                <span class="nav-title"><a href="{% url 'frontpage:frontpage' %}">lifelead</a></span>
+                <div class="main-nav">
+                    <form class="log-form" action="/login/" method="post" autocomplete="off">
+                        {% csrf_token %}
+                        <input type="text" spellcheck="false" placeholder="Email" class="email-input text-input" name="email">
+                        <input type="password" spellcheck="false" placeholder="Mật khẩu" class="password-input text-input" name="password">
+                        <button class="but btn-submit" type="submit">Đăng nhập</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <div class="header-text flex-grid flex-center">
+            <div>
+                <h1>Thay đổi cách chia sẻ của bạn</h1>
+                <h2 class="header-h2">Kết nối - Phát triển - Thử thách</h1>
+            </div>
+            <form class="reg-form" action="/register/" method="post" autocomplete="off">
+                <h2>Chào mừng tới Lifelead</h2>
+                {% csrf_token %}
+                <div class="div_form div_form_1 flex-grid">
+                    <input type="idregff" name="regfirst" placeholder="Họ" type="text" id="idregff" value="{{firstname}}">
+                    <input type="idregfl" name="reglast" placeholder="Tên" type="text" style="margin-left:10px;" id="idregfl" value="{{lastname}}">
+                </div>
+                <p style="margin:0;color:#333;">{{name_error}}</p>
+                <div class="div_form">
+                    <input name="rege" placeholder="Email" type="text" id="idrege" id="idrege" value="{{email}}">
+                    <p style="margin:0;margin-top:10px;;color:#333;">{{email_error}}</p>
+                </div>
+                <div class="div_form">
+                    <input type="password" id="idregp" name="regpass" placeholder="Mật khẩu" />
+                <p style="margin:0;margin-top:10px;color:#333;">{{password_error}}</p>
+                </div>
+                <div class="div_form">
+                    <label class="sp_l">
+                        <input class="sp_i" name="sex" value="male" type="radio">
+                        <span class="sp">Nam</span>
+                    </label>
+                    <label class="sp_l">
+                        <input class="sp_i" name="sex" value="femail" type="radio">
+                        <span class="sp">Nữ</span>
+                    </label>
+                </div>
+                <div class="div_form">
+                    <button class="but btn-register" type="submit">Đăng ký</button>
+                </div>
+            </form>
+        </div>
+    </header>
+    {% endblock %}
+    <script type="text/javascript" src="/static/frontpage/submit.js"></script>
+</body>
+</html>
