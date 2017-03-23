@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^image/', include('image.urls')),
     url(r'^group/', include('group.urls')),
     url(r'^trait/', include('trait.urls')),
     url(r'^message/', include('message.urls')),

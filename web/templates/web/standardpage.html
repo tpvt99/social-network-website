@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
     <meta lang="vi">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
     <link rel="shortcut icon" href="/static/web/favicon.ico" type="image/x-icon">
     <link href="/static/frontpage/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="/static/web/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -16,6 +16,7 @@
     <script src="/static/web/cookie.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/web/nav-head.css">
     <script type="text/javascript" src="/static/web/sticky-kit.min.js" async></script>
+    <script type="text/javascript" src="/static/web/masonry.pkgd.min.js"></script>
     {% block head %}
     {% endblock %}
     {% block status_css %}
@@ -28,6 +29,7 @@
 
 <body>
     <div class="container-fluid" style="margin:0px;padding:0px;">
+        {% block global-head %}
         <div id="global-head">
             <div id="head-inner">
                 <div class="head1">
@@ -110,6 +112,9 @@
             {% block no_head %}
             <div id="head-navigator">
                 <div class="head-vi">
+                    <span><a href="{% url 'web:lifepage' %}" style="color:inherit" class="head-vi-active" data-a="3">Trang chủ</a></span>
+                </div>
+                <div class="head-vi">
                     <span><a href="{% url 'web:webpage' %}" style="color:inherit" class="head-vi-active" data-a="1">Dòng thời gian</a></span>
                 </div>
                 <div class="head-vi">
@@ -118,6 +123,7 @@
             </div>
             {% endblock %}
         </div>
+        {% endblock %}
         {% block no_global-main %}
         <div id="global-main">
             {% block webpage %}

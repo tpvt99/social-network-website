@@ -18,7 +18,7 @@ from activities.models import Activity
 from plan.models import Plan
 from status.models import Status
 from django.db.models import Q
-
+from image.models import Image
 # Create your views here.
 
 class General(View):
@@ -51,6 +51,9 @@ class Profile(View):
             except MyUser.DoesNotExist:
                 return HttpResponseRedirect(reverse('web:error'))
             friends = Friend.objects.filter(user = owner_user)
+            if request.GET.get('key') == 'image':
+                images = Image.objects.filter(user = request.user)
+                return render(request, self.template, {'owner_user':owner_user,'friends':friends,'images':images})
             return render(request, self.template, {'owner_user':owner_user,'friends':friends})
         else:
             return HttpResponseRedirect(reverse('web:webpage'))

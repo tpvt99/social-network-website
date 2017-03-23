@@ -1,0 +1,53 @@
+<div class="grid" style="width:1200px;margin:0 auto;">
+    {% for image in images %}
+    {% if image.image %}
+    <div class="grid-item gr-item">
+        <div class="gr-user">
+            {% if image.user.info.profile_pic %}
+            <img src="{{image.user.info.profile_pic.url}}" class="gr-img">
+            {% else %}
+            <img src="/static/web/user.jpeg" class="gr-img">
+            {% endif %}
+            <span style="font-size:12px;font-weight:600;">{{image.user.fullname}}</span>
+            <p style="margin-top:10px;margin-bottom:0px;font-size:13px;">{{image.head}}</p>
+        </div>
+        <img src="{{image.image.url}}" class="gr-image">
+        <p style="margin:10px;font-size:12px;">Từ thiện</p>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+<style>
+.grid {
+}
+.gr-item {
+    padding : 10px;
+    margin : 20px 0px;
+    background-color : #fff;
+}
+.gr-img {
+    width : 35px;
+    height : 35px;
+    border-radius : 50%;
+}
+.gr-image {
+    width :100%;
+    height : auto;
+    border-radius : 10px;
+    margin-top : 10px;
+}
+.gr-user {
+    padding : 0px 20px;
+}
+.grid-item {
+    width : 400px;
+}
+body {
+    background-color : #fff !important;
+}
+</style>
+<script>
+$('.grid').masonry({
+    itemSelector : '.grid-item',
+});
+</script>
